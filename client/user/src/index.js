@@ -1,4 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router } from 'react-router';
+import { createBrowserHistory } from "history";
 
-ReactDOM.render(<h1>Hello</h1>, document.getElementById('root'));
+import Routes from './routes';
+
+const history = createBrowserHistory();
+
+ReactDOM.render(
+    <Router history={ history }>
+        <Routes/>
+    </Router>,
+    document.getElementById('root')
+);
