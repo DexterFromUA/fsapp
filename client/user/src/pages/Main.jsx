@@ -1,22 +1,24 @@
 import React from 'react';
-import {Container, Row, Col, Button} from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
 
 import Layout from '../layout';
+import BookContainer from '../components/BookContainer';
+import {propsForMain} from '../utils/hoc'
 
-const Main = () => {
+const Main = propsForMain(({ items, hasErrored, isLoading, getItem }) => {
     return (
         <React.Fragment>
             <Layout>
-            <Container>
-                <Row>
-                    <Col>
-                        <Button variant="primary">test</Button>
-                    </Col>
-                </Row>
-            </Container>
+                <Container>
+                    <Row>
+                        <Col>
+                            {isLoading}
+                        </Col>
+                    </Row>
+                </Container>
             </Layout>
         </React.Fragment>
     )
-};
+});
 
 export default Main;

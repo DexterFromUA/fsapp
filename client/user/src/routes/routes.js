@@ -1,8 +1,8 @@
-import Main from '../pages/Main';
+import User from '../containers/user';
 
 export default [
     {
         path: "/",
-        component: Main
+        component: User
     }
 ];
