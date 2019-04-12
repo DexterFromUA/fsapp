@@ -18,3 +18,22 @@ export const propsForMain = compose(
         }
     })
 );
+
+export const propsForBookContainer = compose(
+    withProps(props => {
+        return {
+            items: props.items
+        }
+    })
+);
+
+export const propsForItem = compose(
+    withProps(props => {
+        return {
+            id: props.item.id,
+            name: props.item.name,
+            price: props.item.price,
+            image: props.item.image
+        }
+    })
+);
