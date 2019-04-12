@@ -1,28 +1,15 @@
 import React from 'react';
+import {ListGroup} from 'react-bootstrap';
 
-const BookContainer = () => {
-    const [items, setItems] = React.useState([]);
+import {propsForBookContainer} from '../utils/hoc';
+import ItemContainer from './ItemContainer';
 
-    const fetchItems = () => (
-        fetch('https://5c4070942928860014e07001.mockapi.io/items')
-            .then(res => res.json())
-            .then(res => setItems(res))
-            .catch(e => console.log(e))
-    );
-
-    React.useEffect(() => {
-        fetchItems();
-    },[]);
-
-    return (
-        <React.Fragment>
-            {
-                items.map(item => {
-                    return item.name
-                })
-            }
-        </React.Fragment>
-    )
-};
+const BookContainer = propsForBookContainer(({items}) => (
+    <ListGroup className='align-items-center'>
+        {
+            items.map((item, index) => (<ItemContainer item={item} key={index}/>))
+        }
+    </ListGroup>
+));
 
 export default BookContainer;
