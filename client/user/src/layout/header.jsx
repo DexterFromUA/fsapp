@@ -1,5 +1,6 @@
 import React from 'react';
-import {Container, Row, Col, Navbar} from 'react-bootstrap';
+import {Container, Row, Col, Navbar, Form, Button} from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
 
 const Header = () => {
     return(
@@ -13,7 +14,14 @@ const Header = () => {
                             </Navbar.Brand>
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
-                                <Navbar.Text>
+                                <Form inline className="pl-3 pt-2">
+                                    <Form.Control type="number" placeholder="20" className="mr-sm-2"/>
+                                    <Button variant="outline-primary">Change</Button>
+                                </Form>
+                                <Form inline className="pl-3 pt-2">
+                                    <DatePicker dropdownMode="select"/>
+                                </Form>
+                                <Navbar.Text className="pl-3 pt-2">
                                     Signed as: John Doe
                                 </Navbar.Text>
                             </Navbar.Collapse>

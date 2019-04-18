@@ -1,7 +1,8 @@
 import React from 'react';
-import {Container, Row, Col, Spinner} from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
 
 import Layout from '../layout';
+import Loading from '../components/Loading';
 import BookContainer from '../components/BookContainer';
 import {propsForMain} from '../utils/hoc'
 
@@ -15,19 +16,7 @@ const Main = propsForMain(({hasErrored, isLoading, getItems, items}) => {
     if (isLoading) {
         return (
             <Layout>
-                <Container>
-                    <Row className='text-center'>
-                        <Col>
-                            <Spinner animation="grow" variant="primary"/>
-                            <Spinner animation="grow" variant="secondary"/>
-                            <Spinner animation="grow" variant="success"/>
-                            <Spinner animation="grow" variant="danger"/>
-                            <Spinner animation="grow" variant="warning"/>
-                            <Spinner animation="grow" variant="info"/>
-                            <Spinner animation="grow" variant="dark"/>
-                        </Col>
-                    </Row>
-                </Container>
+                <Loading/>
             </Layout>
         )
     }
