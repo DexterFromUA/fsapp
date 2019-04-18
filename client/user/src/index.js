@@ -7,12 +7,13 @@ import {PersistGate} from 'redux-persist/lib/integration/react';
 
 import {store, persistor} from './store';
 import Routes from './routes';
+import Loading from './components/Loading';
 
 const history = createBrowserHistory();
 
 ReactDOM.render(
     <Provider store={store}>
-        <PersistGate persistor={persistor}>
+        <PersistGate loading={Loading} persistor={persistor}>
             <Router history={history}>
                 <Routes/>
             </Router>

@@ -9,7 +9,8 @@ import rootReducer from './reducers';
 const initialState = {
     hasErrored: false,
     isLoading: true,
-    items: []
+    items: [],
+    amount: 20
 };
 
 const persistConfig = {
