@@ -2,9 +2,9 @@ const db = require('../config');
 
 const Products = {};
 
-Products.findAll = () => {
+Products.findAll = (req, res) => {
     return db.query(
-        `SELECT * FROM products`
+
     )
 };
 
