@@ -6,25 +6,13 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 
-var indexRouter = require('./routes/index');
 var app = express();
+var indexRoute = require('./routes/index');
 
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-
-passport.use(new LocalStrategy(
-    function (email, password, done) {
-        console.log('EMAIL', email);
-        usersController.findUser(email)
-            .then(user => {
-                console.log('USER', user)
-            })
-            .catch(e => console.log("ERROR", e))
-    }
-));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -42,10 +30,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', indexRouter);
-app.use('/login', require('./routes/index'));
+app.use('/', indexRoute);
+app.use('/login', require('./routes/login'));
 app.use('/signup', require('./routes/signup'));
-app.use('/admin', indexRouter);
+app.use('/admin', indexRoute);
 app.use('/api', require('./routes/api'));
 app.use('/error', function (req, res) {
     res.render('error')
