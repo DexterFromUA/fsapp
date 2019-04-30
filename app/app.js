@@ -6,9 +6,11 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
+var uuid = require('uuid/v4');
+var FileStore = require('session-file-store')(session);
 
 var app = express();
-var indexRoute = require('./routes/index');
+var indexRoute = require('./routes/user');
 
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
@@ -16,15 +18,22 @@ app.set('view engine', 'html');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
+    genid: () => uuid(),
     secret: 'zaraffa',
-    resave: true,
+    store: new FileStore(),
+    resave: false,
     saveUninitialized: true,
     cookie:{
-        secure: true
+        secure: true,
+        // originalMaxAge: null,
+        // expires: null,
+        // secure: true,
+        // httpOnly: true
     }
 }));
 app.use(passport.initialize());

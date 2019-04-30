@@ -1,15 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
-var usersController = require('../db/controllers/users');
-const auth = require('../utils/auth');
+const authController = require('../controllers/auth');
+const authMiddleware = require('../middlewares/auth');
 
-router.get('/', auth.alreadyLogged ,function (req, res) {
+router.get('/', authMiddleware.alreadyLogged ,function (req, res) {
     res.render('signup');
 });
 
 router.post('/', function (req, res, next) {
-    usersController.registerUser(req, res)
+    authController.registerUser(req, res)
         .then(data => {
             if (data.code === 200) {
                 res.redirect('/')

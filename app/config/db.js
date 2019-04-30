@@ -9,8 +9,8 @@ var pool = new Pool({
 });
 
 module.exports = {
-    queryAsync: (q, p) => {
-        return pool.query(q, p)
+    queryAsync: (query, props) => {
+        return pool.query(query, props)
             .then(res => res)
             .catch(e => console.log(e))
     },

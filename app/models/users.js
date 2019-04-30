@@ -1,5 +1,4 @@
-const hash = require('../../utils/bcrypt');
-const db = require('../config');
+const db = require('../config/db');
 
 const Users = {};
 
@@ -21,6 +20,6 @@ Users.findUserById = id => {
         'SELECT * FROM users WHERE id = $1',
         [id]
     )
-}
+};
 
  module.exports = Users;

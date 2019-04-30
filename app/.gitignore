@@ -1,0 +1,9 @@
+// Folders
+node_modules
+sessions
+views/user
+views/admin
+
+//Files
+*.lock
+.DS_Store

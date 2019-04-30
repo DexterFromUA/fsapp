@@ -1,13 +1,13 @@
 const passport = require('passport');
-const usersController = require('../db/controllers/users');
+const authController = require('../controllers/auth');
 
 module.exports = () => {
     passport.serializeUser((user, done) => {
-        done(null, user.rows[0].id);
+        done(null, user.id);
     });
 
     passport.deserializeUser((id, done) => {
-        usersController.findUserById(id)
+        authController.findUserById(id)
             .then(user => done(null, user))
             .catch(err => done(err))
     })
