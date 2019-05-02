@@ -8,7 +8,7 @@ Users.createUser = async(firstName, lastName, email, password, role) => {
         [firstName, lastName, email, password, role])
 };
 
-Users.findUser = (username) => {
+Users.findUser = username => {
     return db.queryAsync(
         'SELECT * FROM users WHERE mail = $1',
         [username]

@@ -10,7 +10,7 @@ authMiddleware.isLoggedIn = (req, res, next) => {
 
 authMiddleware.alreadyLogged = (req, res, next) => {
     if (req.isAuthenticated()) {
-        return res.redirect('/login')
+        return res.redirect('/')
     }
     return next()
 };

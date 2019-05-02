@@ -7,3 +7,4 @@ views/admin
 //Files
 *.lock
 .DS_Store
+.env
