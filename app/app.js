@@ -29,14 +29,7 @@ app.use(session({
     secret: 'zaraffa',
     store: new FileStore(),
     resave: false,
-    saveUninitialized: true,
-    cookie:{
-        secure: true,
-        // originalMaxAge: null,
-        // expires: null,
-        // secure: true,
-        // httpOnly: true
-    }
+    saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());

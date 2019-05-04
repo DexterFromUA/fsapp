@@ -18,13 +18,9 @@ authMiddleware.alreadyLogged = (req, res, next) => {
 };
 
 authMiddleware.requiredLogin = (req, res, next) => {
-    console.log('middle');
-    // passport.authenticate('jwt', {session: false}, (req, res, next) => {
-    //     return next();
-    // })
-    if (res.cookie('token')) {
-        next()
-    }
+    passport.authenticate('jwt', {session: false}, (req, res, next) => {
+        return next();
+    })
 };
 
 module.exports = authMiddleware;
