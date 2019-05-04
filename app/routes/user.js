@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 
 const authMiddleware = require('../middlewares/auth');
 
-router.get('/', authMiddleware.isLoggedIn, (req, res, next) => {
+router.get('/', authMiddleware.requiredLogin, (req, res, next) => {
+    console.log('in user');
     res.render('user')
 });
 

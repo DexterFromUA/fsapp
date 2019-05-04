@@ -1,3 +1,5 @@
+const passport = require('../config/passport');
+
 const authMiddleware = {};
 
 authMiddleware.isLoggedIn = (req, res, next) => {
@@ -15,8 +17,14 @@ authMiddleware.alreadyLogged = (req, res, next) => {
     return next()
 };
 
-authMiddleware.handleResponse = (res, code, statusMsg) => {
-    res.status(code).json({status: statusMsg});
+authMiddleware.requiredLogin = (req, res, next) => {
+    console.log('middle');
+    // passport.authenticate('jwt', {session: false}, (req, res, next) => {
+    //     return next();
+    // })
+    if (res.cookie('token')) {
+        next()
+    }
 };
 
 module.exports = authMiddleware;

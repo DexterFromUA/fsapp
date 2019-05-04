@@ -1,11 +1,12 @@
 var {Pool} = require('pg');
+require('dotenv').config();
 
 var pool = new Pool({
-    host: 'localhost',
-    port: 5432,
-    database: 'zara',
-    user: 'root',
-    password: 'root'
+    host: process.env.HOST || 'localhost',
+    port: process.env.PORT || 5432,
+    database: process.env.DATABASE || 'zara',
+    user: process.env.USER || 'root',
+    password: process.env.PASSWORD || 'root'
 });
 
 module.exports = {
