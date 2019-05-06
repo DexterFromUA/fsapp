@@ -1,8 +1,13 @@
-const express = require('express');
-const apiRouter = express.Router();
+const router = require('express').Router();
 
 const productController = require('../controllers/products');
 
-apiRouter.get('/allProducts', productController.findAll);
+router.get('/all', productController.findAll);
 
-module.exports = apiRouter;
+router.post('/add', productController.addProduct);
+
+router.put('/edit/:id', productController.editProduct);
+
+router.delete('/remove/:id', productController.deleteProduct);
+
+module.exports = router;

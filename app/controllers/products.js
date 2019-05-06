@@ -3,7 +3,7 @@ const Products = require('../models/products');
 const productsController = {};
 
 productsController.findAll = (req, res) => {
-    Products.findAll(req, res)
+    Products.findAll()
         .then(products => {
             res.json({
                 message: 'success',
@@ -15,6 +15,18 @@ productsController.findAll = (req, res) => {
                 error: e
             })
         })
+};
+
+productsController.addProduct = () => {
+    console.log('addProduct');
+};
+
+productsController.deleteProduct = () => {
+    console.log('deleteProduct');
+};
+
+productsController.editProduct = () => {
+    console.log('editProduct');
 };
 
 module.exports = productsController;

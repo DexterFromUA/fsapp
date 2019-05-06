@@ -6,7 +6,7 @@ var pool = new Pool({
     port: process.env.PORT || 5432,
     database: process.env.DATABASE || 'zara',
     user: process.env.USER || 'root',
-    password: process.env.PASSWORD || 'root'
+    password: process.env.PASS || 'root'
 });
 
 module.exports = {

@@ -6,10 +6,11 @@ const authHelper = require('../helpers/auth');
 
 const authController = {};
 
-authController.registerUser = async (req, res) => {
+authController.registerUser = async (req, res, role) => {
+    console.log('registration');
     const checkUser = await Users.findUser(req.body.email);
     const hashedPass = passwordUtility.setPassword(req.body.password);
-    const userRole = req.body.role && req.body.role === 'admin' ? 'admin' : 'user';
+    const userRole = role && role === 'admin' ? 'admin' : 'user';
 
     if (checkUser.rowCount > 0) {
         return {
@@ -21,6 +22,7 @@ authController.registerUser = async (req, res) => {
 
     return Users.createUser(req.body.firstName, req.body.lastName, req.body.email, hashedPass, userRole)
         .then(user => {
+            console.log('register returned', user);
             data = {
                 message: user.message || 'success',
                 code: user.code || res.statusCode,
@@ -29,6 +31,7 @@ authController.registerUser = async (req, res) => {
             return data;
         })
         .catch(e => {
+            console.log('error register');
             res.json({
                 message: 'error',
                 code: res.statusCode,
@@ -91,6 +94,14 @@ authController.findUserById = id => {
     return Users.findUserById(id)
         .then(user => user)
         .catch(e => console.log('ERROR WHILE FINDING BY ID', e))
+};
+
+authController.createAdmin = (req, res, next) => {
+    authController.registerUser(req, res, 'admin')
+        .then(res => {
+            return res.json(res.message)
+        })
+        .catch(e => next(e))
 };
 
 module.exports = authController;
