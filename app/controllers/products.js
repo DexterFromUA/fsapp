@@ -7,7 +7,7 @@ productsController.findAll = (req, res) => {
         .then(products => {
             res.json({
                 message: 'success',
-                data: products
+                data: products.rows
             })
         })
         .catch(e => {
@@ -17,15 +17,15 @@ productsController.findAll = (req, res) => {
         })
 };
 
-productsController.addProduct = () => {
+productsController.addProduct = (req, res) => {
     console.log('addProduct');
 };
 
-productsController.deleteProduct = () => {
+productsController.deleteProduct = (req, res) => {
     console.log('deleteProduct');
 };
 
-productsController.editProduct = () => {
+productsController.editProduct = (req, res) => {
     console.log('editProduct');
 };
 

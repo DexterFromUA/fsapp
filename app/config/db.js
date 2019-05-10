@@ -1,4 +1,5 @@
 var {Pool} = require('pg');
+
 require('dotenv').config();
 
 var pool = new Pool({
