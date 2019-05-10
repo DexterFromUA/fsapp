@@ -18,7 +18,18 @@ productsController.findAll = (req, res) => {
 };
 
 productsController.addProduct = (req, res) => {
-    console.log('addProduct');
+    Products.Add(req.body.title, req.body.author, req.body.year)
+        .then(response => res.json({
+            message: 'done',
+            data: response
+        }))
+        .catch(e => {
+            console.log(e);
+            res.json({
+                message: 'error',
+                data: e
+            })
+        })
 };
 
 productsController.deleteProduct = (req, res) => {
