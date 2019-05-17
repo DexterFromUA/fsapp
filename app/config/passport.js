@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
-const authController = require('../controllers/auth');
+const usersController = require('../controllers/usersController');
 const passwordUtility = require('../utils/passwordUtility');
 
 require('dotenv').config();
@@ -13,7 +13,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-    authController.findUserById(id)
+    usersController.findUserById(id)
         .then(user => done(null, user))
         .catch(err => done(err))
 });
@@ -24,7 +24,7 @@ const options = {
 
 passport.use('login', new LocalStrategy(options, (username, password, done) => {
     console.log(username);
-    authController.findUser(username)
+    usersController.findUser(username)
         .then(user => {
             if (!user) {
                 return done(null, false, {message: 'incorrect username'})

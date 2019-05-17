@@ -3,7 +3,10 @@ import {Tab, Row, Col, Nav} from 'react-bootstrap';
 
 import Loading from './Loading';
 
+const ListItem = React.lazy(() => import('./ListItem'));
 const AddItem = React.lazy(() => import('./AddItem'));
+const UserList = React.lazy(() => import('./UserList'));
+const OrderList = React.lazy(() => import('./OrderList'));
 
 const Admin = () => {
     return (
@@ -18,12 +21,6 @@ const Admin = () => {
                             <Nav.Link eventKey="second">Add Item</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link eventKey="third">Edit Item</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                            <Nav.Link eventKey="fourth">Remove Item</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
                             <Nav.Link eventKey="fifth">User List</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
@@ -35,7 +32,7 @@ const Admin = () => {
                     <Tab.Content>
                         <Tab.Pane eventKey="first">
                             <React.Suspense fallback={<Loading/>}>
-                                <AddItem/>
+                                <ListItem/>
                             </React.Suspense>
                         </Tab.Pane>
                         <Tab.Pane eventKey="second">
@@ -43,24 +40,14 @@ const Admin = () => {
                                 <AddItem/>
                             </React.Suspense>
                         </Tab.Pane>
-                        <Tab.Pane eventKey="third">
-                            <React.Suspense fallback={<Loading/>}>
-                                <AddItem/>
-                            </React.Suspense>
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="fourth">
-                            <React.Suspense fallback={<Loading/>}>
-                                <AddItem/>
-                            </React.Suspense>
-                        </Tab.Pane>
                         <Tab.Pane eventKey="fifth">
                             <React.Suspense fallback={<Loading/>}>
-                                <AddItem/>
+                                <UserList/>
                             </React.Suspense>
                         </Tab.Pane>
                         <Tab.Pane eventKey="sixth">
                             <React.Suspense fallback={<Loading/>}>
-                                <AddItem/>
+                                <OrderList/>
                             </React.Suspense>
                         </Tab.Pane>
                     </Tab.Content>
