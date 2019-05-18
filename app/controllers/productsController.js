@@ -25,7 +25,7 @@ module.exports = {
                 bookyear: req.body.year
             }, {
                 where: {
-                    id: req.body.id
+                    id: req.params.id
                 }
             })
             .then(result => res.status(200).send(result))
@@ -35,10 +35,10 @@ module.exports = {
         return Product
             .destroy({
                 where: {
-                    id: req.body.id
+                    id: req.params.id
                 }
             })
-            .then(result => res.status(200).send(result))
+            .then(result => res.sendStatus(200).send(result))
             .catch(error => res.status(400).send(error))
     }
 };
