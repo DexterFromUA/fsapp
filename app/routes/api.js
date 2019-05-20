@@ -15,6 +15,8 @@ router.delete('/remove/:id', productsController.delete);
 
 router.get('/users', usersController.findAll);
 
+router.delete('/users/:id', usersController.remove);
+
 
 router.get('/orders', ordersController.getOrders);
 

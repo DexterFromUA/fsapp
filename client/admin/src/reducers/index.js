@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux';
 
-import loading from './loading';
+import itemsReducer from './items';
 
 const rootReducer = combineReducers({
-    loading
+    itemsReducer
 });
 
 export default rootReducer;

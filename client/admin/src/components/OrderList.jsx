@@ -1,11 +1,11 @@
 import React from 'react';
-import {ListGroup, ListGroupItem} from 'react-bootstrap';
+import {ListGroup, ListGroupItem, Container, Row, Col} from 'react-bootstrap';
 
 const OrderList = () => {
     const [orders, setOrders] = React.useState([]);
 
     React.useEffect(() => {
-        fetch('http://localhost:3001/api/orders')
+        fetch('/api/orders')
             .then(res => setOrders(res))
             .catch(e => console.error('error while getting orders', e))
     }, []);
@@ -13,7 +13,34 @@ const OrderList = () => {
     if (orders.length > 0) {
         return (
             <ListGroup>
-                {orders.map(order => <ListGroupItem>{order.id} - {order.userid} - {order.productid}</ListGroupItem>)}
+                {
+                    orders.map(order =>
+                        <ListGroupItem>
+                            <Container>
+                                <Row>
+                                    <Col>
+                                        {order.id}
+                                    </Col>
+                                    <Col>
+                                        {order.userFullName}
+                                    </Col>
+                                    <Col>
+                                        <ListGroup>
+                                            {
+                                                order.books.map(book =>
+                                                    <ListGroupItem>
+                                                        {book}
+                                                    </ListGroupItem>)
+                                            }
+                                        </ListGroup>
+                                    </Col>
+                                    <Col>
+                                        {order.totalPrice}
+                                    </Col>
+                                </Row>
+                            </Container>
+                        </ListGroupItem>)
+                }
             </ListGroup>
         )
     }

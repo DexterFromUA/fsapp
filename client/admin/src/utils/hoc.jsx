@@ -7,11 +7,3 @@ export const propsForLayout = compose(
         }
     })
 );
-
-export const propsForMain = compose(
-    withProps(props => {
-        return {
-            loading: props.loading
-        }
-    })
-);

@@ -1,29 +1,77 @@
 import React from 'react';
 import {ListGroup, ListGroupItem, Container, Row, Col, Button, Modal, Form} from 'react-bootstrap';
+import {useAlert} from 'react-alert'
 
-const ListItem = () => {
+import Loading from './Loading';
+
+const ListItem = (props) => {
     const [items, setItems] = React.useState([]);
     const [show, changeShow] = React.useState(false);
     const [itemId, setId] = React.useState(null);
     const [title, setTitle] = React.useState('');
     const [author, setAuthor] = React.useState('');
     const [year, setYear] = React.useState('');
+    const [price, setPrice] = React.useState(null);
+
+    const alert = useAlert();
+
+    const fetchItems = () => {
+        fetch('/api/all')
+            .then(res => {
+                if (!res.ok) {
+                    alert.show('ERROR GETTING ITEMS', {
+                        type: 'error',
+                        position: 'bottom left',
+                        transition: 'fade',
+                        timeout: 5000
+                    });
+
+                    throw new Error('error getting items')
+                }
+                return res.json()
+            })
+            .then(res => {
+                setItems(res);
+                props.switchLoading(false);
+            })
+            .catch(e => {
+                alert.show(`${e}`, {
+                    type: 'error',
+                    position: 'bottom left',
+                    transition: 'fade',
+                    timeout: 5000
+                });
+            });
+    };
 
     React.useEffect(() => {
-        fetch('http://localhost:3001/api/all')
-            .then(res => res.json())
-            .then(res => setItems(res))
-            .catch(e => console.error('error while getting items', e))
+        props.switchLoading(true);
+        fetchItems()
     }, []);
 
     const remove = (event, id) => {
         event.preventDefault();
 
-        fetch(`http://localhost:3001/api/remove/${id}`, {
+        fetch(`/api/remove/${id}`, {
             method: 'DELETE'
         })
-            .then(res => console.log(res))
-            .catch(error => console.error(error))
+            .then(res => {
+                alert.show('DELETED', {
+                    type: 'success',
+                    position: 'bottom left',
+                    transition: 'fade',
+                    timeout: 5000
+                });
+                fetchItems();
+            })
+            .catch(error => {
+                alert.show('ERROR', {
+                    type: 'error',
+                    position: 'bottom left',
+                    transition: 'fade',
+                    timeout: 5000
+                });
+            })
     };
 
     const edit = (event, item) => {
@@ -33,6 +81,7 @@ const ListItem = () => {
         setTitle(item.title);
         setAuthor(item.author);
         setYear(item.bookyear);
+        setPrice(item.price);
         changeShow(true);
     };
 
@@ -45,7 +94,7 @@ const ListItem = () => {
     const saveChanges = event => {
         if (event) event.preventDefault();
 
-        fetch(`http://localhost:3001/api/edit/${itemId}`, {
+        fetch(`/api/edit/${itemId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -53,14 +102,48 @@ const ListItem = () => {
             body: JSON.stringify({
                 title: title,
                 author: author,
-                year: year
+                year: year,
+                price: price
             })
         })
             .then(res => {
                 changeShow(false);
+                alert.show('EDITED', {
+                    type: 'success',
+                    position: 'bottom left',
+                    transition: 'fade',
+                    timeout: 5000
+                });
+                fetchItems();
             })
-            .catch(error => console.error(error))
+            .catch(error => {
+                console.error(error);
+                alert.show('ERROR', {
+                    type: 'error',
+                    position: 'bottom left',
+                    transition: 'fade',
+                    timeout: 5000
+                });
+            })
     };
+
+    if (props.loading) {
+        return (
+            <Loading/>
+        )
+    }
+
+    if (!items.length) {
+        return (
+            <Container>
+                <Row>
+                    <Col>
+                        Have no items
+                    </Col>
+                </Row>
+            </Container>
+        )
+    }
 
     if (items.length) {
         return (
@@ -72,7 +155,7 @@ const ListItem = () => {
                                 <Container>
                                     <Row className="align-items-center">
                                         <Col>
-                                            <b>{item.title}</b>, <i>{item.author}, {item.bookyear}</i>
+                                            <b>{item.title}</b>, <i>{item.author}, {item.bookyear}</i> --- ${item.price}
                                         </Col>
                                         <Col className="">
                                             <Button onClick={(event) => remove(event, item.id)} key={index}
@@ -111,6 +194,12 @@ const ListItem = () => {
                                               onChange={e => setYear(e.target.value)}
                                               placeholder="Enter Year"/>
                             </Form.Group>
+                            <Form.Group controlId="price">
+                                <Form.Label>Price</Form.Label>
+                                <Form.Control type="text" name="price" value={price}
+                                              onChange={e => setPrice(e.target.value)}
+                                              placeholder="Enter Price"/>
+                            </Form.Group>
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
@@ -126,11 +215,6 @@ const ListItem = () => {
         )
     }
 
-    return (
-        <ListGroup>
-            <ListGroupItem>Have no items</ListGroupItem>
-        </ListGroup>
-    )
 };
 
 export default ListItem;

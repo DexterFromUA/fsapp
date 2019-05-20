@@ -4,6 +4,8 @@ import {Router} from 'react-router';
 import {createBrowserHistory} from "history";
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/lib/integration/react';
+import {Provider as AlertProvider} from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
 
 import {store, persistor} from './store';
 import Routes from './routes';
@@ -15,7 +17,9 @@ ReactDOM.render(
     <Provider store={store}>
         <PersistGate loading={Loading} persistor={persistor}>
             <Router history={history}>
-                <Routes/>
+                <AlertProvider template={AlertTemplate}>
+                    <Routes/>
+                </AlertProvider>
             </Router>
         </PersistGate>
     </Provider>,

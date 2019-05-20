@@ -1,24 +1,24 @@
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-import Main from '../pages/Main';
-//import getItems from '../actions/actionCreators/getItems';
+import Admin from '../pages/Admin';
+import itemsActions from '../actions/items';
 
 const mapStateToProps = state => {
     return {
-        loading: state.loading
+        loading: state.itemsReducer.loading
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
-        //getItems: (url) => getItems(url)
+        switchLoading: (loading) => itemsActions.Creators.loading(loading)
     }, dispatch)
 };
 
-const Admin = connect(
+const AdminContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(Main);
+)(Admin);
 
-export default Admin;
+export default AdminContainer;

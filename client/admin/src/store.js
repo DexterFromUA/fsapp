@@ -7,7 +7,10 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import rootReducer from './reducers';
 
 const initialState = {
-    loading: true
+    items: [],
+    users: [],
+    orders: [],
+    user: {}
 };
 
 const persistConfig = {
