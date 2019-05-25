@@ -1,17 +1,36 @@
-import {createReducer} from 'reduxsauce';
-
-import itemsActions from '../actions/items';
-
-const INITIAL_STATE = {loading: true};
-
-export const items = (state = INITIAL_STATE, action) => {
-    return {...state, loading: action.loading}
+const INITITAL_STATE = {
+    loadingItems: true,
+    errorItems: '',
+    items: []
 };
 
-const Types = itemsActions.Types;
+export default (state, action) => {
+    if (state === undefined) {
+        state = INITITAL_STATE
+    }
 
-export const itemsReducers = createReducer(INITIAL_STATE, {
-    [Types.LOADING]: items
-});
+    switch (action.type) {
+        case "LOADING_ITEMS":
+            return Object.assign({}, state, {
+                loadingItems: action.payload
+            });
 
-export default itemsReducers;
+        case "ERROR_ITEMS":
+            return Object.assign({}, state, {
+                errorItems: action.payload
+            });
+
+        case "GET_ITEMS":
+            return Object.assign({}, state, {
+                items: action.payload
+            });
+
+        case "DELETE_ITEM":
+            return Object.assign({}, state, {
+                items: state.items.filter(item => item.id !== action.payload.id)
+            });
+
+        default:
+            return state
+    }
+}

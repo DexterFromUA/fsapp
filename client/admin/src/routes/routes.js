@@ -1,4 +1,4 @@
-import Admin from '../containers/admin';
+import Admin from '../pages/Admin';
 
 export default [
     {

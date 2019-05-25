@@ -1,77 +1,25 @@
 import React from 'react';
 import {ListGroup, ListGroupItem, Container, Row, Col, Button, Modal, Form} from 'react-bootstrap';
-import {useAlert} from 'react-alert'
 
 import Loading from './Loading';
 
 const ListItem = (props) => {
-    const [items, setItems] = React.useState([]);
     const [show, changeShow] = React.useState(false);
+    const [newItem, changeNew] = React.useState(false);
     const [itemId, setId] = React.useState(null);
     const [title, setTitle] = React.useState('');
     const [author, setAuthor] = React.useState('');
     const [year, setYear] = React.useState('');
     const [price, setPrice] = React.useState(null);
 
-    const alert = useAlert();
-
-    const fetchItems = () => {
-        fetch('/api/all')
-            .then(res => {
-                if (!res.ok) {
-                    alert.show('ERROR GETTING ITEMS', {
-                        type: 'error',
-                        position: 'bottom left',
-                        transition: 'fade',
-                        timeout: 5000
-                    });
-
-                    throw new Error('error getting items')
-                }
-                return res.json()
-            })
-            .then(res => {
-                setItems(res);
-                props.switchLoading(false);
-            })
-            .catch(e => {
-                alert.show(`${e}`, {
-                    type: 'error',
-                    position: 'bottom left',
-                    transition: 'fade',
-                    timeout: 5000
-                });
-            });
-    };
-
     React.useEffect(() => {
-        props.switchLoading(true);
-        fetchItems()
+        props.api('all')
     }, []);
 
     const remove = (event, id) => {
         event.preventDefault();
 
-        fetch(`/api/remove/${id}`, {
-            method: 'DELETE'
-        })
-            .then(res => {
-                alert.show('DELETED', {
-                    type: 'success',
-                    position: 'bottom left',
-                    transition: 'fade',
-                    timeout: 5000
-                });
-                fetchItems();
-            })
-            .catch(error => {
-                alert.show('ERROR', {
-                    type: 'error',
-                    position: 'bottom left',
-                    transition: 'fade',
-                    timeout: 5000
-                });
-            })
+        props.api('remove', {method: 'DELETE'}, id)
     };
 
     const edit = (event, item) => {
@@ -85,16 +33,28 @@ const ListItem = (props) => {
         changeShow(true);
     };
 
+    const add = event => {
+        event.preventDefault();
+
+        setId(null);
+        setTitle('');
+        setAuthor('');
+        setYear('');
+        setPrice(null);
+        changeNew(true);
+    };
+
     const close = event => {
         if (event) event.preventDefault();
 
         changeShow(false);
+        changeNew(false);
     };
 
     const saveChanges = event => {
         if (event) event.preventDefault();
 
-        fetch(`/api/edit/${itemId}`, {
+        const options = {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -105,35 +65,40 @@ const ListItem = (props) => {
                 year: year,
                 price: price
             })
-        })
-            .then(res => {
-                changeShow(false);
-                alert.show('EDITED', {
-                    type: 'success',
-                    position: 'bottom left',
-                    transition: 'fade',
-                    timeout: 5000
-                });
-                fetchItems();
-            })
-            .catch(error => {
-                console.error(error);
-                alert.show('ERROR', {
-                    type: 'error',
-                    position: 'bottom left',
-                    transition: 'fade',
-                    timeout: 5000
-                });
-            })
+        };
+
+        props.api('edit', options, itemId);
+
+        changeShow(false);
     };
 
-    if (props.loading) {
+    const addItem = event => {
+        if (event) event.preventDefault();
+
+        const options = {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({
+                title: title,
+                author: author,
+                year: year,
+                price: price
+            })
+        };
+
+        props.api('add', options);
+        changeNew(false);
+    };
+
+    if (props.loadingItems) {
         return (
             <Loading/>
         )
     }
 
-    if (!items.length) {
+    if (!props.items.length) {
         return (
             <Container>
                 <Row>
@@ -145,17 +110,19 @@ const ListItem = (props) => {
         )
     }
 
-    if (items.length) {
+    if (props.items.length) {
         return (
             <React.Fragment>
-                <ListGroup>
+                <Button variant="outline-success" size="lg" block onClick={event => add(event)}>ADD NEW</Button>
+
+                <ListGroup className="my-4">
                     {
-                        items.map((item, index) =>
+                        props.items.map((item, index) =>
                             <ListGroupItem>
                                 <Container>
                                     <Row className="align-items-center">
                                         <Col>
-                                            <b>{item.title}</b>, <i>{item.author}, {item.bookyear}</i> --- ${item.price}
+                                            <b>{item.title}</b>, <i>{item.author}, {item.bookyear}</i> {item.price ? ' --- $' + item.price : ''}
                                         </Col>
                                         <Col className="">
                                             <Button onClick={(event) => remove(event, item.id)} key={index}
@@ -168,6 +135,7 @@ const ListItem = (props) => {
                             </ListGroupItem>)
                     }
                 </ListGroup>
+
                 <Modal centered show={show} onHide={close}>
                     <Modal.Header closeButton>
                         <Modal.Title>Change "{title}"</Modal.Title>
@@ -207,6 +175,49 @@ const ListItem = (props) => {
                             Close
                         </Button>
                         <Button variant="primary" onClick={event => saveChanges(event)}>
+                            Save
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal centered show={newItem} onHide={close}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add new</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group controlId="title">
+                                <Form.Label>Title</Form.Label>
+                                <Form.Control type="text" name="title" value={title}
+                                              onChange={e => setTitle(e.target.value)}
+                                              placeholder="Enter Title"/>
+                            </Form.Group>
+
+                            <Form.Group controlId="author">
+                                <Form.Label>Author</Form.Label>
+                                <Form.Control type="text" name="author" value={author}
+                                              onChange={e => setAuthor(e.target.value)}
+                                              placeholder="Enter Author"/>
+                            </Form.Group>
+
+                            <Form.Group controlId="year">
+                                <Form.Label>Year</Form.Label>
+                                <Form.Control type="text" name="year" value={year}
+                                              onChange={e => setYear(e.target.value)}
+                                              placeholder="Enter Year"/>
+                            </Form.Group>
+                            <Form.Group controlId="price">
+                                <Form.Label>Price</Form.Label>
+                                <Form.Control type="text" name="price" value={price}
+                                              onChange={e => setPrice(e.target.value)}
+                                              placeholder="Enter Price"/>
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={event => close(event)}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={event => addItem(event)}>
                             Save
                         </Button>
                     </Modal.Footer>

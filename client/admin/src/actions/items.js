@@ -1,12 +1,27 @@
-import {createActions} from 'reduxsauce';
+export function getItems(items) {
+    return {
+        type: 'GET_ITEMS',
+        payload: items
+    }
+}
 
-const {Types, Creators} = createActions({
-    loading: ['loading']
-});
+export function loadingItems(loading) {
+    return {
+        type: 'LOADING_ITEMS',
+        payload: loading
+    }
+}
 
-const itemsActions = {
-    Types,
-    Creators
-};
+export function errorItems(error) {
+    return {
+        type: 'ERROR_ITEMS',
+        payload: error
+    }
+}
 
-export default itemsActions;
+export function deleteItem(item) {
+    return {
+        type: 'DELETE_ITEM',
+        payload: item
+    }
+}
