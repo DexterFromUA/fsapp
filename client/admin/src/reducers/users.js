@@ -30,6 +30,11 @@ export default (state, action) => {
                 users: state.users.filter(user => user.id !== action.payload.id)
             });
 
+        case "CREATE_ADMIN":
+            return Object.assign({}, state, {
+                users: state.users.filter(user => user.id === action.payload ? user.role = 'admin' : user)
+            });
+
         default:
             return state
     }

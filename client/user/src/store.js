@@ -10,7 +10,8 @@ const initialState = {
     hasErrored: false,
     isLoading: true,
     items: [],
-    amount: 20
+    amount: 20,
+    user: {}
 };
 
 const persistConfig = {

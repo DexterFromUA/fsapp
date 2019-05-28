@@ -1,54 +1,88 @@
-import {loadingItems, errorItems, getItems, deleteItem} from '../items';
+import {loadingItems, errorItems, getItems, deleteItem, addItem, editItem} from '../items';
 
-export const api = (url, params, id) => {
+export const getItemsList = () => {
     return dispatch => {
         dispatch(loadingItems(true));
 
-        if (url === 'all') {
-            getAll(dispatch, url, params)
-        } else {
-            other(dispatch, url, id, params)
-        }
+        fetch('/api/all')
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('error getting items')
+                }
+
+                return res.json()
+            })
+            .then(res => dispatch(getItems(res)))
+            .catch(e => dispatch(errorItems(e)))
+            .finally(() => dispatch(loadingItems(false)))
     }
 };
 
-const getAll = (dispatch, URL, params) => {
-    fetch(`/api/${URL}`, params)
-        .then(res => {
-            if (!res.ok) {
-                dispatch(errorItems('bad response'));
+export const addItemToList = item => {
+    return dispatch => {
+        const options = {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify(item)
+        };
 
-                throw new Error('error getting items')
-            }
+        fetch('/api/add', options)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('error adding items')
+                }
 
-            return res.json()
-        })
-        .then(res => {
-            dispatch(getItems(res));
-            dispatch(loadingItems(false));
-        })
-        .catch(e => {
-            dispatch(errorItems(e));
-        })
+                dispatch(addItem(item));
+            })
+            .catch(e => {
+                dispatch(errorItems(e));
+            })
+    }
 };
 
-const other = (dispatch, URL, id, params, item) => {
-    fetch(`/api/${URL}/${id}`, params)
-        .then(res => {
-            if (!res.ok) {
-                dispatch(errorItems('bad response'));
+export const changeItem = item => {
+    return dispatch => {
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item)
+        };
 
-                throw new Error('error getting items')
-            }
+        fetch(`/api/edit/${item.id}`, options)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('error editing item')
+                }
 
-            if (URL === 'remove') {
-                dispatch(deleteItem(item))
-            } else {
-                getAll('all', null, dispatch);
-            }
-            dispatch(loadingItems(false));
-        })
-        .catch(e => {
-            dispatch(errorItems(e));
-        })
+                dispatch(editItem(item));
+            })
+            .catch(e => {
+                dispatch(errorItems(e));
+            })
+    }
+
+};
+
+export const removeItem = id => {
+    return dispatch => {
+        const options = {
+            method: 'DELETE'
+        };
+
+        fetch(`/api/remove/${id}`, options)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('error deleting item')
+                }
+
+                dispatch(deleteItem(id));
+            })
+            .catch(e => {
+                dispatch(errorItems(e.toString()));
+            })
+    }
 };

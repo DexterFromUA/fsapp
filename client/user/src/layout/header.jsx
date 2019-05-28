@@ -18,9 +18,6 @@ const Header = () => {
                                     <Form.Control type="number" placeholder="20" className="mr-sm-2"/>
                                     <Button variant="outline-primary">Change</Button>
                                 </Form>
-                                <Form inline className="pl-3 pt-2">
-                                    <DatePicker dropdownMode="select"/>
-                                </Form>
                                 <Navbar.Text className="pl-3 pt-2">
                                     Signed as: John Doe
                                 </Navbar.Text>

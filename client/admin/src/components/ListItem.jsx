@@ -13,13 +13,13 @@ const ListItem = (props) => {
     const [price, setPrice] = React.useState(null);
 
     React.useEffect(() => {
-        props.api('all')
+        props.getItemsList('all')
     }, []);
 
     const remove = (event, id) => {
         event.preventDefault();
 
-        props.api('remove', {method: 'DELETE'}, id)
+        props.deleteItem(id)
     };
 
     const edit = (event, item) => {
@@ -54,41 +54,29 @@ const ListItem = (props) => {
     const saveChanges = event => {
         if (event) event.preventDefault();
 
-        const options = {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                title: title,
-                author: author,
-                year: year,
-                price: price
-            })
+        const item = {
+            id: itemId,
+            title: title,
+            author: author,
+            bookyear: year,
+            price: price
         };
 
-        props.api('edit', options, itemId);
-
+        props.changeItem(item);
         changeShow(false);
     };
 
     const addItem = event => {
         if (event) event.preventDefault();
 
-        const options = {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({
-                title: title,
-                author: author,
-                year: year,
-                price: price
-            })
+        const item = {
+            title: title,
+            author: author,
+            bookyear: year,
+            price: price
         };
 
-        props.api('add', options);
+        props.addItem(item);
         changeNew(false);
     };
 
@@ -125,9 +113,9 @@ const ListItem = (props) => {
                                             <b>{item.title}</b>, <i>{item.author}, {item.bookyear}</i> {item.price ? ' --- $' + item.price : ''}
                                         </Col>
                                         <Col className="">
-                                            <Button onClick={(event) => remove(event, item.id)} key={index}
+                                            <Button disabled={item.id ? false : true} onClick={(event) => remove(event, item.id)} key={index}
                                                     variant='danger' className="ml-1 float-right">Remove</Button>
-                                            <Button onClick={(event) => edit(event, item)} key={index} variant='warning'
+                                            <Button disabled={item.id ? false : true} onClick={(event) => edit(event, item)} key={index} variant='warning'
                                                     className="float-right">Edit</Button>
                                         </Col>
                                     </Row>

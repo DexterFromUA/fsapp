@@ -25,3 +25,10 @@ export function deleteUser(user) {
         payload: user
     }
 }
+
+export function createAdmin(id) {
+    return {
+        type: 'CREATE_ADMIN',
+        payload: id
+    }
+}

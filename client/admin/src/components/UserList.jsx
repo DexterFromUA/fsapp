@@ -12,6 +12,12 @@ const UserList = (props) => {
         props.usersApi({method: 'DELETE'}, user)
     };
 
+    const makeNewAdmin = (event, id) => {
+        event.preventDefault();
+
+        props.makeAdmin(id);
+    };
+
     if (!props.users.length) {
         return (
             <ListGroup>
@@ -28,8 +34,9 @@ const UserList = (props) => {
                         <Row className="align-items-center">
                             <Col>{user.name} {user.lastName} --- <i>{user.role}</i></Col>
                             <Col className={user.role === 'admin' ? 'invisible' : ''}>
-                                <Button key={i} variant='danger' className="float-right" onClick={(event) => deleteUser(event, user)}>Delete</Button>
+                                <Button onClick={event => makeNewAdmin(event, user.id)} className="float-right mr-1">Make Admin</Button>
                             </Col>
+                            <Button disabled={props.users.length < 2 && user.role === 'admin' ? true : false} key={i} variant='danger' className="float-right" onClick={(event) => deleteUser(event, user)}>Delete</Button>
                         </Row>
                     </Container>
                 </ListGroupItem>)

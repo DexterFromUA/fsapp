@@ -27,7 +27,23 @@ export default (state, action) => {
 
         case "DELETE_ITEM":
             return Object.assign({}, state, {
-                items: state.items.filter(item => item.id !== action.payload.id)
+                items: state.items.filter(item => item.id !== action.payload)
+            });
+
+        case "EDIT_ITEM":
+            return Object.assign({}, state, {
+                items: state.items.map(item => {
+                    if (item.id !== action.payload.id) {
+                        return item
+                    }
+
+                    return action.payload
+                })
+            });
+
+        case "ADD_ITEM":
+            return Object.assign({}, state, {
+                items: [...state.items, action.payload]
             });
 
         default:

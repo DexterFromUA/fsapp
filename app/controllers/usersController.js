@@ -34,5 +34,17 @@ module.exports = {
             })
             .then(result => res.sendStatus(200).send(result))
             .catch(error => res.status(400).send(error))
+    },
+    admin: (req, res) => {
+        return User
+            .update({
+                role: 'admin'
+            }, {
+                where: {
+                    id: req.params.id
+                }
+            })
+            .then(result => res.status(200).send(result))
+            .catch(error => res.status(400).send(error))
     }
 };

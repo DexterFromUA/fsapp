@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {api} from '../actions/actionCreators/itemsCreator';
+import {addItemToList, getItemsList, removeItem, changeItem} from '../actions/actionCreators/itemsCreator';
 import ListItem from '../components/ListItem';
 
 const mapStateToProps = state => {
@@ -14,7 +14,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
-        api
+        getItemsList,
+        addItem: addItemToList,
+        changeItem,
+        deleteItem: removeItem
     }, dispatch)
 };
 

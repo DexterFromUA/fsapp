@@ -17,6 +17,8 @@ router.get('/users', usersController.findAll);
 
 router.delete('/users/:id', usersController.remove);
 
+router.put('/users/makeadmin/:id', usersController.admin);
+
 
 router.get('/orders', ordersController.getOrders);
 

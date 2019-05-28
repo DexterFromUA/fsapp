@@ -6,7 +6,7 @@ module.exports = {
             .create({
                 title: req.body.title,
                 author: req.body.author,
-                bookyear: req.body.year,
+                bookyear: req.body.bookyear,
                 price: req.body.price
             })
             .then(result => res.status(201).send(result))
@@ -23,7 +23,7 @@ module.exports = {
             .update({
                 title: req.body.title,
                 author: req.body.author,
-                bookyear: req.body.year,
+                bookyear: req.body.bookyear,
                 price: req.body.price
             }, {
                 where: {

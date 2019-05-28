@@ -1,4 +1,4 @@
-import {loadingUsers, errorUsers, getUsers, deleteUser} from '../users';
+import {loadingUsers, errorUsers, getUsers, deleteUser, createAdmin} from '../users';
 
 export const usersApi = (params, user) => {
     return dispatch => {
@@ -22,9 +22,9 @@ const getData = (dispatch, params) => {
         })
         .then(res => {
             dispatch(getUsers(res));
-            dispatch(loadingUsers(false))
         })
-        .catch(e => dispatch(errorUsers(e)));
+        .catch(e => dispatch(errorUsers(e)))
+        .finally(() => dispatch(loadingUsers(false)))
 };
 
 const removeUser = (user, dispatch, params) => {
@@ -33,7 +33,29 @@ const removeUser = (user, dispatch, params) => {
             if (!res.ok) throw new Error('error while deleting user');
 
             dispatch(deleteUser(user));
-            dispatch(loadingUsers(false))
         })
-        .catch(e => dispatch(errorUsers(e)));
+        .catch(e => dispatch(errorUsers(e)))
+        .finally(() => dispatch(loadingUsers(false)))
+};
+
+export const makeAdmin = id => {
+    return dispatch => {
+        dispatch(loadingUsers(true));
+
+        fetch(`/api/users/makeadmin/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('error while making admin: ' + res)
+                }
+
+                dispatch(createAdmin(id));
+            })
+            .catch(e => dispatch(errorUsers(e)))
+            .finally(() => dispatch(loadingUsers(false)));
+    }
 };

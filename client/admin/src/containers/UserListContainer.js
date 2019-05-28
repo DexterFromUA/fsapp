@@ -2,7 +2,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import UserList from '../components/UserList';
-import {usersApi} from '../actions/actionCreators/usersCreator'
+import {usersApi, makeAdmin} from '../actions/actionCreators/usersCreator'
 
 const mapStateToProps = state => {
     return {
@@ -14,7 +14,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
-        usersApi
+        usersApi,
+        makeAdmin
     }, dispatch)
 };
 
