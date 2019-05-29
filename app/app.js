@@ -9,6 +9,8 @@ var session = require('express-session');
 var passport = require('passport');
 var uuid = require('uuid/v4');
 var FileStore = require('session-file-store')(session);
+var fileUpload = require('express-fileupload');
+var favicon = require('serve-favicon');
 
 var app = express();
 var indexRoute = require('./routes/user');
@@ -17,12 +19,23 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(cors());
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', '*');  // enables all the methods to take place
+    return next();
+});
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cookieParser());
+//app.use(fileUpload());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     genid: () => uuid(),

@@ -6,11 +6,13 @@ import Loading from './Loading';
 const ListItem = (props) => {
     const [show, changeShow] = React.useState(false);
     const [newItem, changeNew] = React.useState(false);
+    const [newImage, changeImage] = React.useState(false);
     const [itemId, setId] = React.useState(null);
     const [title, setTitle] = React.useState('');
     const [author, setAuthor] = React.useState('');
     const [year, setYear] = React.useState('');
     const [price, setPrice] = React.useState(null);
+    //const file = React.useRef(null);
 
     React.useEffect(() => {
         props.getItemsList('all')
@@ -49,6 +51,7 @@ const ListItem = (props) => {
 
         changeShow(false);
         changeNew(false);
+        changeImage(false);
     };
 
     const saveChanges = event => {
@@ -78,6 +81,25 @@ const ListItem = (props) => {
 
         props.addItem(item);
         changeNew(false);
+    };
+
+    const addImage = (event, id) => {
+        event.preventDefault();
+        changeImage(true);
+    };
+
+    const changeSelectedImage = (event) => {
+        let upload = new FormData();
+
+        upload.append('name', 'test');
+        upload.append('image', event.target.files[0]);
+
+        fetch('/api/upload', {
+            method: 'POST',
+            body: upload
+        })
+            .then(res => console.log(res.json()))
+            .catch(e => console.log(e))
     };
 
     if (props.loadingItems) {
@@ -117,6 +139,8 @@ const ListItem = (props) => {
                                                     variant='danger' className="ml-1 float-right">Remove</Button>
                                             <Button disabled={item.id ? false : true} onClick={(event) => edit(event, item)} key={index} variant='warning'
                                                     className="float-right">Edit</Button>
+                                            <Button disabled={item.id ? false : true} onClick={(event) => addImage(event, item.id)} key={index}
+                                                    variant='primary' className="mr-1 float-right">Add Image</Button>
                                         </Col>
                                     </Row>
                                 </Container>
@@ -206,6 +230,27 @@ const ListItem = (props) => {
                             Close
                         </Button>
                         <Button variant="primary" onClick={event => addItem(event)}>
+                            Save
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal centered show={newImage} onHide={close}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add new Image</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group>
+                                <Form.Control type="file" onChange={event => changeSelectedImage(event)}/>
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={event => close(event)}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={null}>
                             Save
                         </Button>
                     </Modal.Footer>

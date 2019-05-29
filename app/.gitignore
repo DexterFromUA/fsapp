@@ -3,6 +3,7 @@ node_modules
 sessions
 views/user
 views/admin
+uploads
 
 //Files
 *.lock
