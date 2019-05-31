@@ -9,8 +9,9 @@ var session = require('express-session');
 var passport = require('passport');
 var uuid = require('uuid/v4');
 var FileStore = require('session-file-store')(session);
-var fileUpload = require('express-fileupload');
 var favicon = require('serve-favicon');
+
+require('dotenv').config();
 
 var app = express();
 var indexRoute = require('./routes/user');
@@ -27,7 +28,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Methods', '*');  // enables all the methods to take place
+    res.header('Access-Control-Allow-Methods', '*');
     return next();
 });
 
@@ -35,11 +36,10 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cookieParser());
-//app.use(fileUpload());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     genid: () => uuid(),
-    secret: 'zaraffa',
+    secret: process.env.SECRET,
     store: new FileStore(),
     resave: false,
     saveUninitialized: true
@@ -47,6 +47,7 @@ app.use(session({
 //app.use(passport.initialize());
 //app.use(passport.session());
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/', indexRoute);
 app.use('/login', require('./routes/login'));
 app.use('/signup', require('./routes/signup'));

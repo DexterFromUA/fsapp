@@ -12,7 +12,8 @@ const ListItem = (props) => {
     const [author, setAuthor] = React.useState('');
     const [year, setYear] = React.useState('');
     const [price, setPrice] = React.useState(null);
-    //const file = React.useRef(null);
+    const [imageId, setImageId] = React.useState(null);
+    const [tempUrl, setTempUrl] = React.useState('');
 
     React.useEffect(() => {
         props.getItemsList('all')
@@ -83,23 +84,22 @@ const ListItem = (props) => {
         changeNew(false);
     };
 
-    const addImage = (event, id) => {
+    const addImage = (event, id, url) => {
         event.preventDefault();
+
+        setImageId(id);
+        setTempUrl('/uploads/' + url);
         changeImage(true);
     };
 
     const changeSelectedImage = (event) => {
         let upload = new FormData();
+        let name = Date.now() + '-' + event.target.files[0].name;
 
-        upload.append('name', 'test');
+        upload.append('name', name);
         upload.append('image', event.target.files[0]);
 
-        fetch('/api/upload', {
-            method: 'POST',
-            body: upload
-        })
-            .then(res => console.log(res.json()))
-            .catch(e => console.log(e))
+        props.imageChange(imageId, name, upload);
     };
 
     if (props.loadingItems) {
@@ -139,8 +139,8 @@ const ListItem = (props) => {
                                                     variant='danger' className="ml-1 float-right">Remove</Button>
                                             <Button disabled={item.id ? false : true} onClick={(event) => edit(event, item)} key={index} variant='warning'
                                                     className="float-right">Edit</Button>
-                                            <Button disabled={item.id ? false : true} onClick={(event) => addImage(event, item.id)} key={index}
-                                                    variant='primary' className="mr-1 float-right">Add Image</Button>
+                                            <Button disabled={item.id ? false : true} onClick={(event) => addImage(event, item.id, item.fileUrl)} key={index}
+                                                    variant='primary' className="mr-1 float-right">{item.fileUrl ? 'Change Image' : 'Add Image'}</Button>
                                         </Col>
                                     </Row>
                                 </Container>
@@ -241,6 +241,7 @@ const ListItem = (props) => {
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
+                            <img width='100%' height='100%' className='mb-2' src={tempUrl !== '' && tempUrl !== null ? tempUrl : null} />
                             <Form.Group>
                                 <Form.Control type="file" onChange={event => changeSelectedImage(event)}/>
                             </Form.Group>
@@ -250,8 +251,8 @@ const ListItem = (props) => {
                         <Button variant="secondary" onClick={event => close(event)}>
                             Close
                         </Button>
-                        <Button variant="primary" onClick={null}>
-                            Save
+                        <Button variant="danger" onClick={null}>
+                            Delete
                         </Button>
                     </Modal.Footer>
                 </Modal>

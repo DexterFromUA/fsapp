@@ -1,4 +1,4 @@
-import {loadingItems, errorItems, getItems, deleteItem, addItem, editItem} from '../items';
+import {loadingItems, errorItems, getItems, deleteItem, addItem, editItem, changeImage} from '../items';
 
 export const getItemsList = () => {
     return dispatch => {
@@ -84,5 +84,24 @@ export const removeItem = id => {
             .catch(e => {
                 dispatch(errorItems(e.toString()));
             })
+    }
+};
+
+export const imageChange = (id, name, image) => {
+    return dispatch => {
+        const options = {
+            method: 'PUT',
+            body: image
+        };
+
+        fetch(`/api/upload/${id}`, options)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('error while changing image')
+                }
+
+                dispatch(changeImage(id, name))
+            })
+            .catch(e => dispatch(errorItems(e.toString())))
     }
 };

@@ -46,6 +46,11 @@ export default (state, action) => {
                 items: [...state.items, action.payload]
             });
 
+        case "CHANGE_IMAGE":
+            return Object.assign({}, state, {
+                items: state.items.filter(item => item.id === action.payload.id ? item.fileUrl = action.payload.file : item)
+            });
+
         default:
             return state
     }

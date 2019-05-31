@@ -39,3 +39,13 @@ export function addItem(item) {
         payload: item
     }
 }
+
+export function changeImage(id, item) {
+    return {
+        type: 'CHANGE_IMAGE',
+        payload: {
+            id: id,
+            file: item
+        }
+    }
+}
