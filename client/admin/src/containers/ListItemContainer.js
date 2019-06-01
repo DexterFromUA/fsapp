@@ -1,7 +1,14 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {addItemToList, getItemsList, removeItem, changeItem, imageChange} from '../actions/actionCreators/itemsCreator';
+import {
+    addItemToList,
+    getItemsList,
+    removeItem,
+    changeItem,
+    imageChange,
+    removeImage
+} from '../actions/actionCreators/itemsCreator';
 import ListItem from '../components/ListItem';
 
 const mapStateToProps = state => {
@@ -18,7 +25,8 @@ const mapDispatchToProps = dispatch => {
         addItem: addItemToList,
         changeItem,
         deleteItem: removeItem,
-        imageChange
+        imageChange,
+        removeImage
     }, dispatch)
 };
 

@@ -51,6 +51,11 @@ export default (state, action) => {
                 items: state.items.filter(item => item.id === action.payload.id ? item.fileUrl = action.payload.file : item)
             });
 
+        case "DELETE_IMAGE":
+            return Object.assign({}, state, {
+                items: state.items.filter(item => item.id === action.payload ? delete item.fileUrl : item)
+            });
+
         default:
             return state
     }

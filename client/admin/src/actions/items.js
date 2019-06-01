@@ -49,3 +49,10 @@ export function changeImage(id, item) {
         }
     }
 }
+
+export function deleteImage(id) {
+    return {
+        type: 'DELETE_IMAGE',
+        payload: id
+    }
+}

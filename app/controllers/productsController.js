@@ -1,3 +1,4 @@
+const deleter = require('../helpers/deleter');
 const Product = require('../models').productsmodel;
 
 module.exports = {
@@ -53,6 +54,23 @@ module.exports = {
                 }
             })
             .then(result => res.status(200).send(result))
+            .catch(error => res.status(400).send(error))
+    },
+    removeImage: (req, res) => {
+        console.log(req.params.url);
+
+        return Product
+            .update({
+                fileUrl: null
+            }, {
+                where: {
+                    fileUrl: req.params.url
+                }
+            })
+            .then(result => {
+                deleter(req.params.url);
+                res.status(200).send(result)
+            })
             .catch(error => res.status(400).send(error))
     }
 };

@@ -1,4 +1,4 @@
-import {loadingItems, errorItems, getItems, deleteItem, addItem, editItem, changeImage} from '../items';
+import {loadingItems, errorItems, getItems, deleteItem, addItem, editItem, changeImage, deleteImage} from '../items';
 
 export const getItemsList = () => {
     return dispatch => {
@@ -101,6 +101,25 @@ export const imageChange = (id, name, image) => {
                 }
 
                 dispatch(changeImage(id, name))
+            })
+            .catch(e => dispatch(errorItems(e.toString())))
+    }
+};
+
+export const removeImage = (id, url) => {
+    return dispatch => {
+
+        const options = {
+            method: 'PUT'
+        };
+
+        fetch(`/api/removeupload/${url}`, options)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('error deleting image')
+                }
+
+                dispatch(deleteImage(id))
             })
             .catch(e => dispatch(errorItems(e.toString())))
     }

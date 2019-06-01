@@ -14,6 +14,7 @@ const ListItem = (props) => {
     const [price, setPrice] = React.useState(null);
     const [imageId, setImageId] = React.useState(null);
     const [tempUrl, setTempUrl] = React.useState('');
+    const [imageUrl, setUrl] = React.useState('');
 
     React.useEffect(() => {
         props.getItemsList('all')
@@ -88,7 +89,8 @@ const ListItem = (props) => {
         event.preventDefault();
 
         setImageId(id);
-        setTempUrl('/uploads/' + url);
+        setUrl(url);
+        setTempUrl(url);
         changeImage(true);
     };
 
@@ -100,6 +102,12 @@ const ListItem = (props) => {
         upload.append('image', event.target.files[0]);
 
         props.imageChange(imageId, name, upload);
+    };
+
+    const deleteFile = event => {
+        event.preventDefault();
+
+        props.removeImage(imageId, imageUrl)
     };
 
     if (props.loadingItems) {
@@ -241,7 +249,10 @@ const ListItem = (props) => {
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
-                            <img width='100%' height='100%' className='mb-2' src={tempUrl !== '' && tempUrl !== null ? tempUrl : null} />
+                            {tempUrl !== '' && tempUrl !== null && tempUrl !== undefined ?
+                                <img width='100%' height='100%' className='mb-2' src={'/uploads/' + tempUrl} /> :
+                                null
+                            }
                             <Form.Group>
                                 <Form.Control type="file" onChange={event => changeSelectedImage(event)}/>
                             </Form.Group>
@@ -251,7 +262,7 @@ const ListItem = (props) => {
                         <Button variant="secondary" onClick={event => close(event)}>
                             Close
                         </Button>
-                        <Button variant="danger" onClick={null}>
+                        <Button variant="danger" onClick={event => deleteFile(event)}>
                             Delete
                         </Button>
                     </Modal.Footer>
