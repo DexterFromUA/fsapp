@@ -1,37 +1,19 @@
 import React from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 
-import Layout from '../layout';
-import Loading from '../components/Loading';
-import BookContainer from '../components/BookContainer';
-import {propsForMain} from '../utils/hoc'
+import User from '../containers/user';
 
-const Main = propsForMain(({hasErrored, isLoading, getItems, items}) => {
-    const url = 'https://5c4070942928860014e07001.mockapi.io/items';
 
-    React.useEffect(() => {
-        getItems(url);
-    }, []);
-
-    if (isLoading) {
-        return (
-            <Layout>
-                <Loading/>
-            </Layout>
-        )
-    }
-
+const Main = () => {
     return (
-        <Layout>
-            <Container>
-                <Row>
-                    <Col>
-                        <BookContainer items={items}/>
-                    </Col>
-                </Row>
-            </Container>
-        </Layout>
+        <Container fluid>
+            <Row>
+                <Col>
+                    <User/>
+                </Col>
+            </Row>
+        </Container>
     )
-});
+};
 
 export default Main;

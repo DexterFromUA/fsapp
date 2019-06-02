@@ -2,21 +2,22 @@ import fetchData from '../fetchData';
 import hasErrored from '../hasErrored';
 import isLoading from '../isLoading';
 
-export default function getItems(url) {
+export function getItems() {
     return dispatch => {
         dispatch(isLoading(true));
 
-        fetch(url)
+        fetch('/api/all', {
+            method: 'GET'
+        })
             .then(res => {
                 if(!res.ok) {
                     throw new Error(res.statusText)
                 }
-                dispatch(isLoading(false));
 
-                return res
+                dispatch(isLoading(false));
+                return res.json()
             })
-            .then(res => res.json())
             .then(res => dispatch(fetchData(res)))
-            .catch(() => dispatch(hasErrored(true)))
+            .catch((e) => dispatch(hasErrored(true)))
     }
 }
