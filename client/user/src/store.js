@@ -9,7 +9,7 @@ import rootReducer from './reducers';
 const initialState = {
     hasErrored: false,
     isLoading: true,
-    items: [],
+    items: {},
     amount: 10,
     user: {},
     cart: []
@@ -17,7 +17,10 @@ const initialState = {
 
 const persistConfig = {
     key: 'root',
-    storage: storage
+    storage: storage,
+    whitelist: [
+        'amount'
+    ]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

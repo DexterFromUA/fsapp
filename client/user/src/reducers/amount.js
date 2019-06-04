@@ -1,10 +1,10 @@
 export default (state, action) => {
     if(state === undefined) {
-        state = {};
+        state = 12;
     }
 
     switch (action.type) {
-        case "FETCH_DATA":
+        case "SET_AMOUNT":
             return action.payload;
 
         default:

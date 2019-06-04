@@ -3,6 +3,8 @@ import {bindActionCreators} from "redux";
 
 import MainComponent from '../components/MainComponent';
 import {getItems} from '../actions/actionCreators/getItems';
+import {getFilteredItems} from '../actions/actionCreators/getFilteredItems';
+import {amount} from "../actions/amount";
 
 const mapStateToProps = state => {
     return {
@@ -17,7 +19,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
-        getItems
+        getItems,
+        getFilteredItems,
+        setAmount: amount
     }, dispatch)
 };
 

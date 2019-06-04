@@ -144,11 +144,11 @@ const ListItem = (props) => {
                                         </Col>
                                         <Col className="">
                                             <Button disabled={item.id ? false : true} onClick={(event) => remove(event, item.id)} key={index}
-                                                    variant='danger' className="ml-1 float-right">Remove</Button>
-                                            <Button disabled={item.id ? false : true} onClick={(event) => edit(event, item)} key={index} variant='warning'
+                                                    variant='outline-danger' className="ml-1 float-right">Remove</Button>
+                                            <Button disabled={item.id ? false : true} onClick={(event) => edit(event, item)} key={index} variant='outline-warning'
                                                     className="float-right">Edit</Button>
                                             <Button disabled={item.id ? false : true} onClick={(event) => addImage(event, item.id, item.fileUrl)} key={index}
-                                                    variant='primary' className="mr-1 float-right">{item.fileUrl ? 'Change Image' : 'Add Image'}</Button>
+                                                    variant='outline-primary' className="mr-1 float-right">{item.fileUrl ? 'Change Image' : 'Add Image'}</Button>
                                         </Col>
                                     </Row>
                                 </Container>

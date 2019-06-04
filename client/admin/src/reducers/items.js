@@ -1,7 +1,7 @@
 const INITITAL_STATE = {
     loadingItems: true,
     errorItems: '',
-    items: []
+    items: {}
 };
 
 export default (state, action) => {

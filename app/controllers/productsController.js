@@ -1,3 +1,4 @@
+const Op = require('sequelize').Op;
 const deleter = require('../helpers/deleter');
 const Product = require('../models').productsmodel;
 
@@ -15,7 +16,31 @@ module.exports = {
     },
     findAll: (req, res) => {
         return Product
-            .findAll()
+            .findAndCountAll({
+                offset: (req.params.page * req.params.amount) - req.params.amount,
+                limit: req.params.amount,
+                order: [['createdAt', 'DESC']]
+            })
+            .then(result => res.status(200).send(result))
+            .catch(error => res.status(400).send(error))
+    },
+    findAllWithFilter: (req, res) => {
+        // (page * limit) - limit
+        //const count = (req.params.page * req.params.amount) - req.body.limit;
+
+        return Product
+            .findAll({
+                offset: 0,
+                limit: req.params.amount,
+                order: [
+                    ['createdAt', 'DESC']
+                ],
+                where: {
+                    createdAt: {
+                        [Op.between]: [req.params.start, req.params.end]
+                    }
+                }
+            })
             .then(result => res.status(200).send(result))
             .catch(error => res.status(400).send(error))
     },
@@ -34,7 +59,7 @@ module.exports = {
             .then(result => res.status(200).send(result))
             .catch(error => res.status(400).send(error))
     },
-    delete: (req ,res) => {
+    delete: (req, res) => {
         return Product
             .destroy({
                 where: {
@@ -48,7 +73,7 @@ module.exports = {
         return Product
             .update({
                 fileUrl: req.file.filename
-            },{
+            }, {
                 where: {
                     id: req.params.id
                 }

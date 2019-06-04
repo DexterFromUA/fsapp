@@ -4,22 +4,27 @@ import {Container, Row, Col, Pagination} from 'react-bootstrap';
 import ItemComponent from './ItemComponent';
 
 const ListComponent = (props) => {
+    const arr = [];
+
+    for (let i = 1; i <= Math.ceil(props.items.count / props.amount); i++) {
+        arr.push(i);
+    }
+
     return (
         <Container>
             <Row>
-                    <ItemComponent items={props.items}/>
+                <ItemComponent items={props.items.rows}/>
             </Row>
             <Row>
-                <Col className="">
+                <Col>
                     <Pagination>
                         <Pagination.First/>
                         <Pagination.Prev/>
-                        <Pagination.Item>{1}</Pagination.Item>
-                        <Pagination.Item>{2}</Pagination.Item>
-                        <Pagination.Item>{3}</Pagination.Item>
-                        <Pagination.Item>{4}</Pagination.Item>
-                        <Pagination.Next />
-                        <Pagination.Last />
+                        {
+                            arr.map(index => <Pagination.Item key={index}>{index}</Pagination.Item>)
+                        }
+                        <Pagination.Next/>
+                        <Pagination.Last/>
                     </Pagination>
                 </Col>
             </Row>

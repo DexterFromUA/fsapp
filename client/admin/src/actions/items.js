@@ -1,7 +1,10 @@
 export function getItems(items) {
     return {
         type: 'GET_ITEMS',
-        payload: items
+        payload: {
+            items: items.rows,
+            count: items.count
+        }
     }
 }
 

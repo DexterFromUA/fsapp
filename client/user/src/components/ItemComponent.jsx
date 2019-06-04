@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Button, Col} from 'react-bootstrap';
+import {Card, Button, Col, Form} from 'react-bootstrap';
 
 const ItemComponent = (props) => {
     if (!props.items.length) {
@@ -22,6 +22,9 @@ const ItemComponent = (props) => {
                 </Card.Body>
                 <Card.Footer>
                     <Button variant="primary">Buy - ${item.price}</Button>
+                    <Form.Text className="text-muted">
+                        {item.createdAt}
+                    </Form.Text>
                 </Card.Footer>
             </Card>
         </Col>)

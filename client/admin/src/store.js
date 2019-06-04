@@ -11,7 +11,7 @@ const initialState = {
     itemsState: {
         loadingItems: true,
         errorItems: '',
-        items: []
+        items: {}
     },
     usersState: {
         loadingUsers: true,

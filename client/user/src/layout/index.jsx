@@ -78,9 +78,9 @@ const Layout = (props) => {
                     className={classes.list}
                     role="presentation"
                     // onClick={toggleDrawer(false)}
-                    onKeyDown={toggleDrawer(false)}
+                    // onKeyDown={toggleDrawer(false)}
                 >
-                    <FilterComponent/>
+                    <FilterComponent getItems={props.getItems} amount={props.amount} setAmount={props.setAmount} getFilteredItems={props.getFilteredItems}/>
                 </div>
             </Drawer>
         </React.Fragment>

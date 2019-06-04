@@ -3,13 +3,15 @@ import {Container, Row, Col} from 'react-bootstrap';
 
 import Layout from '../layout';
 import Loading from './Loading';
-import FilterComponent from './FilterComponent';
 import ListComponent from './ListComponent';
-import CartComponent from './CartComponent';
 
 const MainComponent = (props) => {
+    const getAllItems = (page) => {
+        props.getItems(props.amount, page);
+    };
+
     React.useEffect(() => {
-        props.getItems();
+        getAllItems(1)
     }, []);
 
     if (props.isLoading) {
@@ -21,18 +23,12 @@ const MainComponent = (props) => {
     }
 
     return (
-        <Layout>
+        <Layout getItems={props.getItems} amount={props.amount} setAmount={props.setAmount} getFilteredItems={props.getFilteredItems}>
             <Container className="mt-4">
                 <Row>
-                    {/*<Col xs={12} lg={3}>*/}
-                    {/*    <FilterComponent/>*/}
-                    {/*</Col>*/}
                     <Col>
-                        <ListComponent items={props.items}/>
+                        <ListComponent items={props.items} amount={props.amount} getItems={getAllItems}/>
                     </Col>
-                    {/*<Col xs={12} lg={3}>*/}
-                    {/*    <CartComponent cart={props.cart}/>*/}
-                    {/*</Col>*/}
                 </Row>
             </Container>
         </Layout>

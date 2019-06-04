@@ -4,7 +4,7 @@ export const getItemsList = () => {
     return dispatch => {
         dispatch(loadingItems(true));
 
-        fetch('/api/all')
+        fetch(`/api/all/${50}`)
             .then(res => {
                 if (!res.ok) {
                     throw new Error('error getting items')

@@ -1,6 +1,6 @@
 export default (state, action) => {
     if(state === undefined) {
-        state = false;
+        state = '';
     }
 
     switch (action.type) {
