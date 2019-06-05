@@ -5,6 +5,8 @@ import MainComponent from '../components/MainComponent';
 import {getItems} from '../actions/actionCreators/getItems';
 import {getFilteredItems} from '../actions/actionCreators/getFilteredItems';
 import {amount} from "../actions/amount";
+import {page} from "../actions/page";
+import filter from "../actions/filter";
 
 const mapStateToProps = state => {
     return {
@@ -13,7 +15,9 @@ const mapStateToProps = state => {
         items: state.items,
         amount: state.amount,
         user: state.user,
-        cart: state.cart
+        cart: state.cart,
+        page: state.page,
+        filter: state.filter
     };
 };
 
@@ -21,7 +25,9 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({
         getItems,
         getFilteredItems,
-        setAmount: amount
+        setAmount: amount,
+        changePage: page,
+        setFilter: filter
     }, dispatch)
 };
 

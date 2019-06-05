@@ -18,10 +18,10 @@ const ItemComponent = (props) => {
                 }
                 <Card.Body>
                     <Card.Title>{item.title}</Card.Title>
-                    <Card.Text>{item.author} - {item.bookyear}</Card.Text>
+                    <Card.Text>{item.author} {item.author && item.bookyear ? '-' : ''} {item.bookyear}</Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                    <Button variant="primary">Buy - ${item.price}</Button>
+                    <Button variant="outline-primary">Add - ${item.price}</Button>
                     <Form.Text className="text-muted">
                         {item.createdAt}
                     </Form.Text>

@@ -2,11 +2,11 @@ import fetchData from '../fetchData';
 import hasErrored from '../hasErrored';
 import isLoading from '../isLoading';
 
-export function getFilteredItems(amount, start, end) {
+export function getFilteredItems(amount, page, start, end) {
     return dispatch => {
         dispatch(isLoading(true));
 
-        fetch(`/api/all/${amount}/${start}/${end}`, {
+        fetch(`/api/filtered/${amount}/${page}/${start}/${end}`, {
             method: 'GET'
         })
             .then(res => {
@@ -16,10 +16,8 @@ export function getFilteredItems(amount, start, end) {
 
                 return res.json()
             })
-            .then(res => {
-                dispatch(fetchData(res));
-                dispatch(isLoading(false));
-            })
-            .catch((e) => dispatch(hasErrored(e)))
+            .then(res => dispatch(fetchData(res)))
+            .catch((e) => dispatch(hasErrored(e.toString())))
+            .finally(() => dispatch(isLoading(false)))
     }
 }

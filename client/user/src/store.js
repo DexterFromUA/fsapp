@@ -12,7 +12,12 @@ const initialState = {
     items: {},
     amount: 12,
     user: {},
-    cart: []
+    cart: [],
+    page: 1,
+    filter: {
+        status: false,
+        date: []
+    }
 };
 
 const persistConfig = {

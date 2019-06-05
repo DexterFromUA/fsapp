@@ -6,13 +6,17 @@ import Loading from './Loading';
 import ListComponent from './ListComponent';
 
 const MainComponent = (props) => {
-    const getAllItems = (page) => {
-        props.getItems(props.amount, page);
+    const getAllItems = () => {
+        props.getItems(props.amount, props.page);
+    };
+
+    const getFilteredItems = () => {
+        props.getFilteredItems(props.amount, props.page, props.filter.date[0], props.filter.date[1])
     };
 
     React.useEffect(() => {
-        getAllItems(1)
-    }, []);
+        props.filter.status ? getFilteredItems() : getAllItems() //TODO when calling filtered items, send old page state. Need first
+    }, [props.page, props.filter, props.amount]);
 
     if (props.isLoading) {
         return (
@@ -23,11 +27,16 @@ const MainComponent = (props) => {
     }
 
     return (
-        <Layout getItems={props.getItems} amount={props.amount} setAmount={props.setAmount} getFilteredItems={props.getFilteredItems}>
+        <Layout amount={props.amount}
+                setAmount={props.setAmount}
+                setFilter={props.setFilter}>
             <Container className="mt-4">
                 <Row>
                     <Col>
-                        <ListComponent items={props.items} amount={props.amount} getItems={getAllItems}/>
+                        <ListComponent items={props.items}
+                                       amount={props.amount}
+                                       changePage={props.changePage}
+                                       page={props.page}/>
                     </Col>
                 </Row>
             </Container>

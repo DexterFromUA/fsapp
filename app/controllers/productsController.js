@@ -25,12 +25,9 @@ module.exports = {
             .catch(error => res.status(400).send(error))
     },
     findAllWithFilter: (req, res) => {
-        // (page * limit) - limit
-        //const count = (req.params.page * req.params.amount) - req.body.limit;
-
         return Product
-            .findAll({
-                offset: 0,
+            .findAndCountAll({
+                offset: (req.params.page * req.params.amount) - req.params.amount,
                 limit: req.params.amount,
                 order: [
                     ['createdAt', 'DESC']

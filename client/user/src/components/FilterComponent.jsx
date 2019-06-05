@@ -13,19 +13,22 @@ const FilterComponent = (props) => {
 
     const applyFilter = (event) => {
         event.preventDefault();
-        props.getFilteredItems(amount, date[0].toISOString(), date[1].toISOString())
+        
+        let arr = [];
+        date.map(date => arr.push(date.toISOString()));
+        props.setFilter(true, arr)
     };
 
     const onChangeAmount = (event) => {
         event.preventDefault();
+
         props.setAmount(amount);
-        props.getItems(amount, 1)
     };
 
     const clearFilter = (event) => {
         event.preventDefault();
 
-        props.getItems(props.amount, 1)
+        props.setFilter(false, []);
     };
 
     return (
