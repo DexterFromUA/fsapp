@@ -4,6 +4,7 @@ import isLoading from '../isLoading';
 
 export function getItems(amount, page) {
     return dispatch => {
+        console.log('GETTER')
         dispatch(isLoading(true));
 
         fetch(`/api/all/${amount}/${page}`, {

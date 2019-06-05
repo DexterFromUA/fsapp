@@ -10,7 +10,7 @@ const initialState = {
     hasErrored: false,
     isLoading: true,
     items: {},
-    amount: 10,
+    amount: 12,
     user: {},
     cart: []
 };

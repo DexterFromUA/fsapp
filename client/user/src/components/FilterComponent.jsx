@@ -19,13 +19,13 @@ const FilterComponent = (props) => {
     const onChangeAmount = (event) => {
         event.preventDefault();
         props.setAmount(amount);
-        props.getItems(amount)
+        props.getItems(amount, 1)
     };
 
     const clearFilter = (event) => {
         event.preventDefault();
 
-        props.getItems(props.amount)
+        props.getItems(props.amount, 1)
     };
 
     return (
