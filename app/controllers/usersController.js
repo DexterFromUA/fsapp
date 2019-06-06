@@ -1,5 +1,5 @@
 const User = require('../models').usersModel;
-const bc = require('../utils/passwordUtility');
+const bc = require('../helpers/passwordUtility');
 
 module.exports = {
     add: (req, res) => {
@@ -22,8 +22,21 @@ module.exports = {
             .then(result => res.status(200).send(result))
             .catch(error => res.status(400).send(error))
     },
-    find: (req, res) => {
-        return null;
+    findById: (id) => {
+        return User
+            .findByPk(id)
+            .then(result => result)
+            .catch(error => error)
+    },
+    findByMail: (mail) => {
+        return User
+            .findOne({
+                where: {
+                    mail: mail
+                }
+            })
+            .then(result => result)
+            .catch(error => error)
     },
     remove: (req, res) => {
         return User

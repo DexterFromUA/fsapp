@@ -10,8 +10,10 @@ var passport = require('passport');
 var uuid = require('uuid/v4');
 var FileStore = require('session-file-store')(session);
 var favicon = require('serve-favicon');
+var flash = require('connect-flash');
 
 require('dotenv').config();
+require('./config/passport')(passport);
 
 var app = express();
 var indexRoute = require('./routes/user');
@@ -33,7 +35,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true})); //TODO ? changed to TRUE
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -44,8 +46,9 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
-//app.use(passport.initialize());
-//app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/', indexRoute);

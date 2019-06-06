@@ -1,60 +1,54 @@
-const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 const usersController = require('../controllers/usersController');
-const passwordUtility = require('../utils/passwordUtility');
+const passwordUtility = require('../helpers/passwordUtility');
 
 require('dotenv').config();
 
-passport.serializeUser((user, done) => {
-    return done(null, user.id);
-});
+module.exports = (passport) => {
+    passport.serializeUser((user, done) => {
+        console.log('SERIALIZE!!!', user);
+        return done(null, user.id)
+    });
 
-passport.deserializeUser((id, done) => {
-    usersController.findUserById(id)
-        .then(user => done(null, user))
-        .catch(err => done(err))
-});
+    passport.deserializeUser((id, done) => {
+        // usersController.findById(id)
+        //     .then(user => {
+        //         console.log('USER!!!', user);
+        //         if (user) {
+        //             done(null, user.get())
+        //         } else {
+        //             done(user.error)
+        //         }
+        //     })
+        console.log('DESERIALIZE!!!', id);
+        return done(null, id)
+    });
 
-const options = {
-    usernameField: 'email'
-};
-
-passport.use('login', new LocalStrategy(options, (username, password, done) => {
-    console.log(username);
-    usersController.findUser(username)
-        .then(user => {
-            if (!user) {
-                return done(null, false, {message: 'incorrect username'})
-            } else if (!passwordUtility.comparePassword(password, user.rows[0].password)) {
-                return done(null, false, {message: 'incorrect password'})
-            } else
-                return done(null, user.rows[0]);
-        })
-        .catch(e => done(e))
-}));
-
-const optionsJWT = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.SECRET
-};
-
-passport.use('jwt', new JwtStrategy(optionsJWT, (payload, done) => {
-    console.log('payload', payload);
-    if (payload.id) {
-        authController.findUserById(payload.id)
+    passport.use('login', new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
+        usersController.findByMail(email)
             .then(user => {
-                if (user) {
-                    done(null, user)
-                }
-                done(null, false)
+                if (!user) {
+                    return done(null, false, {message: 'incorrect username'})
+                } else if (!passwordUtility.comparePassword(password, user.dataValues.password)) {
+                    return done(null, false, {message: 'incorrect password'})
+                } else
+                    return done(null, user.dataValues);
             })
             .catch(e => done(e))
-    }
+    }));
 
-    return done(null, false)
-}));
-
-module.exports = passport;
+    passport.use('jwt', new JwtStrategy({
+        jwtFromRequest: ExtractJwt.fromUrlQueryParameter(process.env.SECRET),
+        secretOrKey: process.env.SECRET
+    }, (token, done) => {
+        console.log('TOKEN!!!', token);
+        try {
+            return done(null, token.user)
+        } catch (e) {
+            return done(e)
+        }
+    }));
+};
