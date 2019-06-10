@@ -8,7 +8,7 @@ const ListComponent = (props) => {
     return (
         <Container>
             <Row>
-                <ItemComponent items={props.items.rows}/>
+                <ItemComponent items={props.items.rows} addToCart={props.addToCart} cart={props.cart} inc={props.inc}/>
             </Row>
             <Row className='justify-content-center'>
                 <PaginationComponent items={props.items}

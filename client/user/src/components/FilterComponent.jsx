@@ -2,10 +2,12 @@ import React from 'react';
 import {Typography, Divider, List, ListItem} from "@material-ui/core";
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import {InputGroup, FormControl, Button} from 'react-bootstrap';
+import {useTranslation} from "react-i18next";
 
 const FilterComponent = (props) => {
     const [date, setDate] = React.useState([new Date(), new Date()]);
     const [amount, setAmount] = React.useState(props.amount);
+    const {t} = useTranslation();
 
     const onChangeDate = (dateChange) => {
         setDate(dateChange);
@@ -34,12 +36,12 @@ const FilterComponent = (props) => {
     return (
         <React.Fragment>
             <Typography variant="h5" className="ml-4 mt-4">
-                Filters:
+                {t('Filters')}:
             </Typography>
             <Divider/>
             <List>
                 <ListItem>
-                    <Typography>Amount items at one page:</Typography>
+                    <Typography>{t('Amount items at one page')}:</Typography>
                 </ListItem>
                 <ListItem>
                     <InputGroup className="mb-2">
@@ -51,13 +53,13 @@ const FilterComponent = (props) => {
                             onChange={event => setAmount(event.target.value)}
                         />
                         <InputGroup.Append>
-                            <Button onClick={event => onChangeAmount(event)} variant="outline-secondary">Set</Button>
+                            <Button onClick={event => onChangeAmount(event)} variant="outline-secondary">{t('Set')}</Button>
                         </InputGroup.Append>
                     </InputGroup>
                 </ListItem>
                 <Divider/>
                 <ListItem>
-                    <Typography>Filter by Date:</Typography>
+                    <Typography>{t('Filter by Date')}:</Typography>
                 </ListItem>
                 <ListItem className="mt-2">
                     <DateRangePicker
@@ -68,10 +70,10 @@ const FilterComponent = (props) => {
                     />
                 </ListItem>
                 <ListItem>
-                    <Button variant="outline-secondary" size="sm" block onClick={event => applyFilter(event)}>Filter</Button>
+                    <Button variant="outline-secondary" size="sm" block onClick={event => applyFilter(event)}>{t('Filter')}</Button>
                 </ListItem>
                 <ListItem>
-                    <Button variant="outline-secondary" size="sm" block onClick={event => clearFilter(event)}>Clear Filter</Button>
+                    <Button variant="outline-secondary" size="sm" block onClick={event => clearFilter(event)}>{t('Clear Filter')}</Button>
                 </ListItem>
             </List>
         </React.Fragment>

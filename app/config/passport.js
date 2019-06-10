@@ -35,13 +35,13 @@ module.exports = (passport) => {
                 } else if (!passwordUtility.comparePassword(password, user.dataValues.password)) {
                     return done(null, false, {message: 'incorrect password'})
                 } else
-                    return done(null, user.dataValues);
+                    return done(null, user.dataValues, {message: 'success'});
             })
             .catch(e => done(e))
     }));
 
     passport.use('jwt', new JwtStrategy({
-        jwtFromRequest: ExtractJwt.fromUrlQueryParameter(process.env.SECRET),
+        jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
         secretOrKey: process.env.SECRET
     }, (token, done) => {
         console.log('TOKEN!!!', token);

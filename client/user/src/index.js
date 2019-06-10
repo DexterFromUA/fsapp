@@ -9,6 +9,8 @@ import {store, persistor} from './store';
 import Routes from './routes';
 import Loading from './components/Loading';
 
+import './i18n';
+
 const history = createBrowserHistory();
 
 ReactDOM.render(

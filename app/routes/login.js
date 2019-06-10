@@ -2,8 +2,6 @@ const router = require('express').Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
-const cookieHelper = require('../helpers/cookie');
-
 require('dotenv').config();
 
 router.get('/', function (req, res, next) {
@@ -21,18 +19,18 @@ router.post('/', function (req, res, next) {
                 if (error) return next(error);
 
                 const payload = {
-                    _id: user.id,
+                    id: user.id,
                     email: user.mail,
+                    name: user.name,
+                    lastName: user.lastName,
                     admin: user.role === 'admin' ? true : false
                 };
 
                 const token = jwt.sign({user: payload}, process.env.SECRET);
-                console.log(token);
 
-                //cookieHelper.setCookie('test', 'token', 7);
-                //localStorage.setItem('token', jwt.sign({user: payload}, process.env.SECRET));
-
-                res.redirect('/')
+                //res.cookie('token', 'bearer ' + token).redirect('/')
+                res.setHeader('Authorization', token);
+                res.redirect('/');
             });
         } catch (e) {
             return next(e)

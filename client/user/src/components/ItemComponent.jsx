@@ -1,10 +1,39 @@
 import React from 'react';
 import {Card, Button, Col, Form} from 'react-bootstrap';
+import {useTranslation} from 'react-i18next';
 
 const ItemComponent = (props) => {
+    const {t} = useTranslation();
+
+    const addItem = (event, item) => {
+        event.preventDefault();
+
+        // props.cart.length > 0 ?
+        //     props.cart.map(book => {
+        //         if (item.id !== book.id) {
+        //             return props.addToCart(item)
+        //         }
+        //         if (item.id === book.id) {
+        //             return props.inc(item.id)
+        //         }
+        //     }) : props.addToCart(item)
+
+        const arrOfIds = props.cart.map(item => item.id);
+
+        if (arrOfIds.includes(item.id)) {
+            props.cart.map(current => {
+                if (current.id === item.id) {
+                    props.inc(item.id);
+                }
+            })
+        } else {
+            props.addToCart(item);
+        }
+    };
+
     if (!props.items.length) {
         return (
-            <h1>have no items</h1>
+            <h1>{t('have no items')}</h1>
         )
     }
 
@@ -21,7 +50,8 @@ const ItemComponent = (props) => {
                     <Card.Text>{item.author} {item.author && item.bookyear ? '-' : ''} {item.bookyear}</Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                    <Button variant="outline-primary">Add - ${item.price}</Button>
+                    <Button variant="outline-primary" onClick={event => addItem(event, item)}>{t('Add')} -
+                        ${item.price}</Button>
                     <Form.Text className="text-muted">
                         {item.createdAt}
                     </Form.Text>

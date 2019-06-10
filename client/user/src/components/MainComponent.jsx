@@ -16,7 +16,7 @@ const MainComponent = (props) => {
 
     React.useEffect(() => {
         props.filter.status ? getFilteredItems() : getAllItems() //TODO when calling filtered items, send old page state. Need first
-    }, [props.page, props.filter, props.amount]);
+    }, [props.page, props.filter, props.amount, props.lng]);
 
     if (props.isLoading) {
         return (
@@ -29,14 +29,22 @@ const MainComponent = (props) => {
     return (
         <Layout amount={props.amount}
                 setAmount={props.setAmount}
-                setFilter={props.setFilter}>
+                setFilter={props.setFilter}
+                cart={props.cart}
+                inc={props.inc}
+                dec={props.dec}
+                deleteFromCart={props.deleteFromCart}
+        >
             <Container className="mt-4">
                 <Row>
                     <Col>
                         <ListComponent items={props.items}
                                        amount={props.amount}
                                        changePage={props.changePage}
-                                       page={props.page}/>
+                                       page={props.page}
+                                       addToCart={props.addToCart}
+                                       cart={props.cart}
+                                       inc={props.inc}/>
                     </Col>
                 </Row>
             </Container>

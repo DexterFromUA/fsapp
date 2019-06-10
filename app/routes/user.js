@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const passport = require('passport');
 const path = require('path');
+const passport = require('passport');
 
 router.get('/', (req, res, next) => {
-    res.render(path.join(__dirname, '..', 'client', 'user', 'build', 'index.html'))
+    res.render(path.join(__dirname, '..', 'client', 'user', 'build', 'i18n.js.html'))
     // res.json({
     //     message: 'secure route',
     //     user: req.user,
@@ -12,6 +12,4 @@ router.get('/', (req, res, next) => {
 });
 
 module.exports = router;
-
-
 //passport.authenticate('jwt', {session: false}, null),

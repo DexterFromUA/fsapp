@@ -16,7 +16,6 @@ require('dotenv').config();
 require('./config/passport')(passport);
 
 var app = express();
-var indexRoute = require('./routes/user');
 
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
@@ -28,9 +27,10 @@ app.use(cors());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Methods', '*');
+    res.header('Access-Control-Expose-Headers', 'Authorization');
     return next();
 });
 
@@ -51,10 +51,10 @@ app.use(passport.session());
 app.use(flash());
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/', indexRoute);
+app.use('/', require('./routes/user'));
 app.use('/login', require('./routes/login'));
 app.use('/signup', require('./routes/signup'));
-app.use('/admin', indexRoute);
+app.use('/admin', require('./routes/admin'));
 app.use('/api', require('./routes/api'));
 app.use('/error', function (req, res) {
     res.render('error')

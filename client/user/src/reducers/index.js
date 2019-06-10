@@ -6,6 +6,7 @@ import isLoading from './isLoading';
 import amount from './amount';
 import page from './page';
 import filter from './filter';
+import cart from './cart';
 
 const rootReducer = combineReducers({
     hasErrored,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     isLoading,
     amount,
     page,
-    filter
+    filter,
+    cart
 });
 
 export default rootReducer;
