@@ -19,7 +19,8 @@ export function addToCart(item) {
             id: item.id,
             title: item.title,
             count: 1,
-            price: item.price
+            price: item.price,
+            fullPrice: item.price
         }
     }
 }
@@ -28,5 +29,11 @@ export function deleteFromCart(id) {
     return {
         type: 'DELETE_FROM_CART',
         payload: id
+    }
+}
+
+export function cleanUp() {
+    return {
+        type: 'CLEAN_UP'
     }
 }

@@ -34,6 +34,7 @@ const MainComponent = (props) => {
                 inc={props.inc}
                 dec={props.dec}
                 deleteFromCart={props.deleteFromCart}
+                cleanUp={props.cleanUp}
         >
             <Container className="mt-4">
                 <Row>

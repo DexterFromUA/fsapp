@@ -19,5 +19,9 @@ router.delete('/users/:id', usersController.remove);
 router.put('/users/makeadmin/:id', usersController.admin);
 
 router.get('/orders', ordersController.getOrders);
+router.post('/setorder', function (req, res) {
+    console.log(req)
+});
+router.put('/orders', ordersController.changeOrder);
 
 module.exports = router;

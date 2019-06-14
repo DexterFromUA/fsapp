@@ -139,7 +139,7 @@ const Layout = (props) => {
                     className={classes.listRight}
                     role="presentation"
                 >
-                    <CartComponent cart={props.cart} inc={props.inc} dec={props.dec} deleteFromCart={props.deleteFromCart} />
+                    <CartComponent cart={props.cart} inc={props.inc} dec={props.dec} deleteFromCart={props.deleteFromCart} cleanUp={props.cleanUp} />
                 </div>
             </Drawer>
         </React.Fragment>

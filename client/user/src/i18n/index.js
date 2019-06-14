@@ -18,7 +18,8 @@ const resources = {
             'Title': 'Title',
             'Amount': 'Amount',
             'Price': 'Price',
-            'Delete': 'Delete'
+            'Clean Up': 'Clean Up',
+            'Total amount of your order': 'Total amount of your order'
         }
     },
     ru: {
@@ -36,7 +37,8 @@ const resources = {
             'Title': 'Название',
             'Amount': 'Количество',
             'Price': 'Цена (общая)',
-            'Delete': 'Удалить'
+            'Clean Up': 'Очистить',
+            'Total amount of your order': 'Общая сумма заказа'
         }
     }
 };

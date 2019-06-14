@@ -8,6 +8,8 @@ export default (state, action) => {
             return state.map(item => {
                 if (item.id === action.payload) {
                     item.count += 1;
+                    const full = item.price * item.count;
+                    item.fullPrice = +full.toFixed(2);
                     return item;
                 } else {
                     return item
@@ -19,6 +21,8 @@ export default (state, action) => {
                 if (item.id === action.payload) {
                     if (item.count > 1) {
                         item.count -= 1;
+                        const full = item.price * item.count;
+                        item.fullPrice = +full.toFixed(2);
                     }
                     return item;
                 } else {
@@ -31,6 +35,9 @@ export default (state, action) => {
 
         case "DELETE_FROM_CART":
             return state.filter(item => item.id !== action.payload);
+
+        case "CLEAN_UP":
+            return state = [];
 
         default:
             return state

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Table} from 'react-bootstrap';
-import {Button, IconButton, ButtonGroup, Paper, Typography} from '@material-ui/core';
+import {Table, Container, Row, Col} from 'react-bootstrap';
+import {Button, IconButton, Paper, Typography} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
@@ -13,14 +13,15 @@ const useStyles = makeStyles(theme => ({
 
 const CartComponent = (props) => {
     const [sum, setSum] = React.useState(0);
+    const [loading, setLoading] = React.useState(false);
     const {t} = useTranslation();
     const classes = useStyles();
 
     React.useEffect(() => {
-        let arr = props.cart.map(item => item.price);
+        let arr = props.cart.map(item => item.fullPrice);
         if (arr.length) {
             let sumOfArr = arr.reduce((out, current) => out + current);
-            setSum(sumOfArr);
+            setSum(sumOfArr.toFixed(2));
         }
     }, [props.cart]);
 
@@ -39,6 +40,36 @@ const CartComponent = (props) => {
         props.deleteFromCart(id);
     };
 
+    const cleanUp = (event) => {
+        event.preventDefault();
+        props.cleanUp();
+    };
+
+    const send = event => {
+        event.preventDefault();
+
+        setLoading(true);
+        const data = {
+          key: 'test'
+        };
+
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(data)
+        };
+
+        fetch('/api/setorder', options)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('error while sending order')
+                }
+
+                return res;
+            })
+            .catch(e => console.log(e))
+            .finally(() => setLoading(false));
+    };
+
     if (props.cart.length <= 0) {
         return (
             <React.Fragment>
@@ -49,32 +80,42 @@ const CartComponent = (props) => {
 
     return (
         <React.Fragment>
-            <Table responsive>
-                <thead>
-                <tr>
-                    <th>{t('Title')}</th>
-                    <th>{t('Amount')}</th>
-                    <th>{t('Price')}</th>
-                    <th>{t('Delete')}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    props.cart.map((item, index) => <tr key={index}>
-                        <td>{item.title}</td>
-                        <td><Button size="small" aria-label="dec" onClick={event => dec(event, item.id)}>-</Button>{item.count}<Button size="small" aria-label="inc" onClick={event => inc(event, item.id)}>+</Button></td>
-                        <td>${item.price}</td>
-                        <td><IconButton size="small" aria-label="Delete" onClick={event => remove(event, item.id)}><DeleteIcon /></IconButton></td>
-                    </tr>)
-                }
-                </tbody>
-            </Table>
-            <div className="m-5">
-                <Paper className={classes.root}>
-                    <Typography>Sum of ur order - ${sum}</Typography>
-                </Paper>
-            </div>
-            <ButtonGroup></ButtonGroup>
+            <Container>
+                <Row className='justify-content-center'>
+                    <Table responsive>
+                        <thead>
+                        <tr>
+                            <th>{t('Title')}</th>
+                            <th>{t('Amount')}</th>
+                            <th>{t('Price')}</th>
+                            <th><Button variant='outlined' color='secondary' size='small' onClick={event => cleanUp(event)}>{t('Clean Up')}</Button></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            props.cart.map((item, index) => <tr key={index}>
+                                <td>{item.title}</td>
+                                <td><Button size="small" aria-label="dec" onClick={event => dec(event, item.id)}>-</Button>{item.count}<Button size="small" aria-label="inc" onClick={event => inc(event, item.id)}>+</Button></td>
+                                <td>${item.fullPrice}</td>
+                                <td><IconButton size="small" aria-label="Delete" onClick={event => remove(event, item.id)}><DeleteIcon /></IconButton></td>
+                            </tr>)
+                        }
+                        </tbody>
+                    </Table>
+                </Row>
+                <Row>
+                    <Col md={8} className='align-content-center'>
+                        <div className="m-2">
+                            <Paper className={classes.root}>
+                                <Typography>{t('Total amount of your order')} - ${sum}</Typography>
+                            </Paper>
+                        </div>
+                    </Col>
+                    <Col md={4} className='text-right align-self-center'>
+                        <Button onClick={event => send(event)}>Order</Button>
+                    </Col>
+                </Row>
+            </Container>
         </React.Fragment>
     )
 };
