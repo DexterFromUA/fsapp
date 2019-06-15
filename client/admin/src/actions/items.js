@@ -1,49 +1,46 @@
-export function getItems(items) {
+export const getItems = (items) => {
     return {
         type: 'GET_ITEMS',
-        payload: {
-            items: items.rows,
-            count: items.count
-        }
+        payload: items
     }
-}
+};
 
-export function loadingItems(loading) {
+export const loadingItems = (loading) => {
     return {
         type: 'LOADING_ITEMS',
         payload: loading
     }
-}
+};
 
-export function errorItems(error) {
+export const errorItems = (error) => {
     return {
         type: 'ERROR_ITEMS',
         payload: error
     }
-}
+};
 
-export function deleteItem(id) {
+export const deleteItem = (id) => {
     return {
         type: 'DELETE_ITEM',
         payload: id
     }
-}
+};
 
-export function editItem(item) {
+export const editItem = (item) => {
     return {
         type: 'EDIT_ITEM',
         payload: item
     }
-}
+};
 
-export function addItem(item) {
+export const addItem = (item) => {
     return {
         type: 'ADD_ITEM',
         payload: item
     }
-}
+};
 
-export function changeImage(id, item) {
+export const changeImage = (id, item) => {
     return {
         type: 'CHANGE_IMAGE',
         payload: {
@@ -51,18 +48,25 @@ export function changeImage(id, item) {
             file: item
         }
     }
-}
+};
 
-export function deleteImage(id) {
+export const deleteImage = (id) => {
     return {
         type: 'DELETE_IMAGE',
         payload: id
     }
-}
+};
 
-export function changePage(page) {
+export const changePage = (page) => {
     return {
         type: 'CHANGE_PAGE',
         payload: page
     }
-}
+};
+
+export const setAmount = (amount) => {
+    return {
+        type: 'SET_AMOUNT',
+        payload: amount
+    }
+};

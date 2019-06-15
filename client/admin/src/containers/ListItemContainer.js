@@ -16,8 +16,8 @@ const mapStateToProps = state => {
     return {
         loadingItems: state.itemsState.loadingItems,
         errorItems: state.itemsState.errorItems,
-        items: state.itemsState.items.items,
-        count: state.itemsState.items.count,
+        items: state.itemsState.items,
+        count: state.itemsState.amount,
         page: state.itemsState.page
     }
 };

@@ -5,9 +5,7 @@ const INITIAL_STATE = {
 };
 
 export default (state, action) => {
-    if (state === undefined) {
-        state = INITIAL_STATE
-    }
+    state = state === undefined ? INITIAL_STATE : state;
 
     switch (action.type) {
         case "LOADING_USERS":

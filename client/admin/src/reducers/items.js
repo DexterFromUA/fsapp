@@ -1,14 +1,13 @@
-const INITITAL_STATE = {
+const INITIAL_STATE = {
     loadingItems: true,
     errorItems: '',
-    items: {},
-    page: 1
+    items: [],
+    page: 1,
+    amount: 0
 };
 
 export default (state, action) => {
-    if (state === undefined) {
-        state = INITITAL_STATE
-    }
+    state = state === undefined ? INITIAL_STATE : state;
 
     switch (action.type) {
         case "LOADING_ITEMS":
@@ -60,6 +59,11 @@ export default (state, action) => {
         case "CHANGE_PAGE":
             return Object.assign({}, state, {
                 page: action.payload
+            });
+
+        case 'SET_AMOUNT':
+            return Object.assign({}, state, {
+                amount: action.payload
             });
 
         default:

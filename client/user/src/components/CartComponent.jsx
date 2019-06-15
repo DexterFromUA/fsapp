@@ -49,16 +49,18 @@ const CartComponent = (props) => {
         event.preventDefault();
 
         setLoading(true);
-        const data = {
-          key: 'test'
-        };
+
+        const data = props.cart.map(item => [item.id, item.count]);
 
         const options = {
+            headers: {
+                'Content-Type': 'application/json'
+            },
             method: 'POST',
             body: JSON.stringify(data)
         };
 
-        fetch('/api/setorder', options)
+        fetch('/api/order', options)
             .then(res => {
                 if (!res.ok) {
                     throw new Error('error while sending order')
@@ -68,6 +70,8 @@ const CartComponent = (props) => {
             })
             .catch(e => console.log(e))
             .finally(() => setLoading(false));
+
+        console.log(data)
     };
 
     if (props.cart.length <= 0) {

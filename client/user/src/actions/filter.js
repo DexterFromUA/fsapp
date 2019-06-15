@@ -1,4 +1,4 @@
-export default function filter(status, date) {
+export const filter = (status, date) => {
     return {
         type: 'FILTERED',
         payload: {
@@ -6,4 +6,11 @@ export default function filter(status, date) {
             date: date
         }
     }
-}
+};
+
+export const amount = (num) => {
+    return {
+        type: 'SET_AMOUNT',
+        payload: num
+    }
+};

@@ -1,34 +1,34 @@
-export function loadingUsers(loading) {
+export const loadingUsers = (loading) => {
     return {
         type: 'LOADING_USERS',
         payload: loading
     }
-}
+};
 
-export function errorUsers(error) {
+export const errorUsers = (error) => {
     return {
         type: 'ERROR_USERS',
         payload: error
     }
-}
+};
 
-export function getUsers(users) {
+export const getUsers = (users) => {
     return {
         type: 'GET_USERS',
         payload: users
     }
-}
+};
 
-export function deleteUser(user) {
+export const deleteUser = (user) => {
     return {
         type: 'DELETE_USER',
         payload: user
     }
-}
+};
 
-export function createAdmin(id) {
+export const createAdmin = (id) => {
     return {
         type: 'CREATE_ADMIN',
         payload: id
     }
-}
+};

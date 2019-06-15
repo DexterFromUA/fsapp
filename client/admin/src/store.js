@@ -11,8 +11,9 @@ const initialState = {
     itemsState: {
         loadingItems: true,
         errorItems: '',
-        items: {},
-        page: 1
+        items: [],
+        page: 1,
+        amount: 0
     },
     usersState: {
         loadingUsers: true,

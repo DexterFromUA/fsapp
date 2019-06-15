@@ -1,53 +1,49 @@
 import React from 'react';
 import {ListGroup, ListGroupItem, Container, Row, Col} from 'react-bootstrap';
 
-const OrderList = () => {
-    const [orders, setOrders] = React.useState([]);
-
+const OrderList = (props) => {
     React.useEffect(() => {
-        fetch('/api/orders')
-            .then(res => setOrders(res))
-            .catch(e => console.error('error while getting orders', e))
+        props.getOrders()
     }, []);
 
-    if (orders.length > 0) {
+    if (!props.orders.length) {
         return (
             <ListGroup>
-                {
-                    orders.map(order =>
-                        <ListGroupItem>
-                            <Container>
-                                <Row>
-                                    <Col>
-                                        {order.id}
-                                    </Col>
-                                    <Col>
-                                        {order.userFullName}
-                                    </Col>
-                                    <Col>
-                                        <ListGroup>
-                                            {
-                                                order.books.map(book =>
-                                                    <ListGroupItem>
-                                                        {book}
-                                                    </ListGroupItem>)
-                                            }
-                                        </ListGroup>
-                                    </Col>
-                                    <Col>
-                                        {order.totalPrice}
-                                    </Col>
-                                </Row>
-                            </Container>
-                        </ListGroupItem>)
-                }
+                <ListGroupItem>Have no orders</ListGroupItem>
             </ListGroup>
         )
     }
 
-    return(
+    return (
         <ListGroup>
-            <ListGroupItem>Have no orders</ListGroupItem>
+            {
+                props.orders.map(order =>
+                    <ListGroupItem>
+                        <Container>
+                            <Row>
+                                <Col>
+                                    {order.id}
+                                </Col>
+                                <Col>
+                                    {order.usersModel.name}, {order.usersModel.lastName}
+                                </Col>
+                                {/*<Col>*/}
+                                {/*    <ListGroup>*/}
+                                {/*        {*/}
+                                {/*            order.books.map(book =>*/}
+                                {/*                <ListGroupItem>*/}
+                                {/*                    {book}*/}
+                                {/*                </ListGroupItem>)*/}
+                                {/*        }*/}
+                                {/*    </ListGroup>*/}
+                                {/*</Col>*/}
+                                {/*<Col>*/}
+                                {/*    {order.totalPrice}*/}
+                                {/*</Col>*/}
+                            </Row>
+                        </Container>
+                    </ListGroupItem>)
+            }
         </ListGroup>
     )
 };

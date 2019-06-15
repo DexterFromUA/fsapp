@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     fileUrl: DataTypes.STRING
   }, {});
   productsmodel.associate = function(models) {
-    // associations can be defined here
+    //productsmodel.hasMany(models.ordersProducts, {foreignKey: 'productId'})
   };
   return productsmodel;
 }

@@ -1,6 +1,4 @@
-import fetchData from '../fetchData';
-import hasErrored from '../hasErrored';
-import isLoading from '../isLoading';
+import {isLoading, hasErrored, fetchData} from '../items';
 
 export function getFilteredItems(amount, page, start, end) {
     return dispatch => {

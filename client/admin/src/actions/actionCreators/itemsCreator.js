@@ -1,4 +1,14 @@
-import {loadingItems, errorItems, getItems, deleteItem, addItem, editItem, changeImage, deleteImage} from '../items';
+import {
+    loadingItems,
+    errorItems,
+    getItems,
+    deleteItem,
+    addItem,
+    editItem,
+    changeImage,
+    deleteImage,
+    setAmount
+} from '../items';
 
 export const getItemsList = (page) => {
     return dispatch => {
@@ -12,7 +22,11 @@ export const getItemsList = (page) => {
 
                 return res.json()
             })
-            .then(res => dispatch(getItems(res)))
+            .then(res => {
+                console.log(res)
+                dispatch(setAmount(res.count));
+                dispatch(getItems(res.rows));
+            })
             .catch(e => dispatch(errorItems(e)))
             .finally(() => dispatch(loadingItems(false)))
     }

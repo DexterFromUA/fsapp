@@ -129,156 +129,158 @@ const ListItem = (props) => {
         )
     }
 
-    if (props.items.length) {
-        return (
-            <React.Fragment>
-                <Button variant="outline-success" size="lg" block onClick={event => add(event)}>ADD NEW</Button>
+    return (
+        <React.Fragment>
+            <Button variant="outline-success" size="lg" block onClick={event => add(event)}>ADD NEW</Button>
 
-                <ListGroup className="my-4">
-                    {
-                        props.items.map((item, index) =>
-                            <ListGroupItem>
-                                <Container>
-                                    <Row className="align-items-center">
-                                        <Col>
-                                            <b>{item.title}</b>, <i>{item.author}, {item.bookyear}</i> {item.price ? ' --- $' + item.price : ''}
-                                        </Col>
-                                        <Col className="">
-                                            <Button disabled={item.id ? false : true} onClick={(event) => remove(event, item.id)} key={index}
-                                                    variant='outline-danger' className="ml-1 float-right">Remove</Button>
-                                            <Button disabled={item.id ? false : true} onClick={(event) => edit(event, item)} key={index} variant='outline-warning'
-                                                    className="float-right">Edit</Button>
-                                            <Button disabled={item.id ? false : true} onClick={(event) => addImage(event, item.id, item.fileUrl)} key={index}
-                                                    variant='outline-primary' className="mr-1 float-right">{item.fileUrl ? 'Change Image' : 'Add Image'}</Button>
-                                        </Col>
-                                    </Row>
-                                </Container>
-                            </ListGroupItem>)
-                    }
-                </ListGroup>
+            <ListGroup className="my-4">
+                {
+                    props.items.map((item, index) =>
+                        <ListGroupItem>
+                            <Container>
+                                <Row className="align-items-center">
+                                    <Col>
+                                        <b>{item.title}</b>, <i>{item.author}, {item.bookyear}</i> {item.price ? ' --- $' + item.price : ''}
+                                    </Col>
+                                    <Col className="">
+                                        <Button disabled={item.id ? false : true}
+                                                onClick={(event) => remove(event, item.id)} key={index}
+                                                variant='outline-danger' className="ml-1 float-right">Remove</Button>
+                                        <Button disabled={item.id ? false : true} onClick={(event) => edit(event, item)}
+                                                key={index} variant='outline-warning'
+                                                className="float-right">Edit</Button>
+                                        <Button disabled={item.id ? false : true}
+                                                onClick={(event) => addImage(event, item.id, item.fileUrl)} key={index}
+                                                variant='outline-primary'
+                                                className="mr-1 float-right">{item.fileUrl ? 'Change Image' : 'Add Image'}</Button>
+                                    </Col>
+                                </Row>
+                            </Container>
+                        </ListGroupItem>)
+                }
+            </ListGroup>
 
-                <Row className='justify-content-center'>
-                    <PaginationComponent
-                        count={props.count}
-                        changePage={props.changePage}
-                        page={props.page}
-                    />
-                </Row>
+            <Row className='justify-content-center'>
+                <PaginationComponent
+                    count={props.count}
+                    changePage={props.changePage}
+                    page={props.page}
+                />
+            </Row>
 
-                <Modal centered show={show} onHide={close}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Change "{title}"</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group controlId="title">
-                                <Form.Label>Title</Form.Label>
-                                <Form.Control type="text" name="title" value={title}
-                                              onChange={e => setTitle(e.target.value)}
-                                              placeholder="Enter Title"/>
-                            </Form.Group>
+            <Modal centered show={show} onHide={close}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Change "{title}"</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="title">
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control type="text" name="title" value={title}
+                                          onChange={e => setTitle(e.target.value)}
+                                          placeholder="Enter Title"/>
+                        </Form.Group>
 
-                            <Form.Group controlId="author">
-                                <Form.Label>Author</Form.Label>
-                                <Form.Control type="text" name="author" value={author}
-                                              onChange={e => setAuthor(e.target.value)}
-                                              placeholder="Enter Author"/>
-                            </Form.Group>
+                        <Form.Group controlId="author">
+                            <Form.Label>Author</Form.Label>
+                            <Form.Control type="text" name="author" value={author}
+                                          onChange={e => setAuthor(e.target.value)}
+                                          placeholder="Enter Author"/>
+                        </Form.Group>
 
-                            <Form.Group controlId="year">
-                                <Form.Label>Year</Form.Label>
-                                <Form.Control type="text" name="year" value={year}
-                                              onChange={e => setYear(e.target.value)}
-                                              placeholder="Enter Year"/>
-                            </Form.Group>
-                            <Form.Group controlId="price">
-                                <Form.Label>Price</Form.Label>
-                                <Form.Control type="text" name="price" value={price}
-                                              onChange={e => setPrice(e.target.value)}
-                                              placeholder="Enter Price"/>
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={event => close(event)}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={event => saveChanges(event)}>
-                            Save
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-                <Modal centered show={newItem} onHide={close}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Add new</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group controlId="title">
-                                <Form.Label>Title</Form.Label>
-                                <Form.Control type="text" name="title" value={title}
-                                              onChange={e => setTitle(e.target.value)}
-                                              placeholder="Enter Title"/>
-                            </Form.Group>
+                        <Form.Group controlId="year">
+                            <Form.Label>Year</Form.Label>
+                            <Form.Control type="text" name="year" value={year}
+                                          onChange={e => setYear(e.target.value)}
+                                          placeholder="Enter Year"/>
+                        </Form.Group>
+                        <Form.Group controlId="price">
+                            <Form.Label>Price</Form.Label>
+                            <Form.Control type="text" name="price" value={price}
+                                          onChange={e => setPrice(e.target.value)}
+                                          placeholder="Enter Price"/>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={event => close(event)}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={event => saveChanges(event)}>
+                        Save
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <Modal centered show={newItem} onHide={close}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add new</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="title">
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control type="text" name="title" value={title}
+                                          onChange={e => setTitle(e.target.value)}
+                                          placeholder="Enter Title"/>
+                        </Form.Group>
 
-                            <Form.Group controlId="author">
-                                <Form.Label>Author</Form.Label>
-                                <Form.Control type="text" name="author" value={author}
-                                              onChange={e => setAuthor(e.target.value)}
-                                              placeholder="Enter Author"/>
-                            </Form.Group>
+                        <Form.Group controlId="author">
+                            <Form.Label>Author</Form.Label>
+                            <Form.Control type="text" name="author" value={author}
+                                          onChange={e => setAuthor(e.target.value)}
+                                          placeholder="Enter Author"/>
+                        </Form.Group>
 
-                            <Form.Group controlId="year">
-                                <Form.Label>Year</Form.Label>
-                                <Form.Control type="text" name="year" value={year}
-                                              onChange={e => setYear(e.target.value)}
-                                              placeholder="Enter Year"/>
-                            </Form.Group>
-                            <Form.Group controlId="price">
-                                <Form.Label>Price</Form.Label>
-                                <Form.Control type="text" name="price" value={price}
-                                              onChange={e => setPrice(e.target.value)}
-                                              placeholder="Enter Price"/>
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={event => close(event)}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={event => addItem(event)}>
-                            Save
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
+                        <Form.Group controlId="year">
+                            <Form.Label>Year</Form.Label>
+                            <Form.Control type="text" name="year" value={year}
+                                          onChange={e => setYear(e.target.value)}
+                                          placeholder="Enter Year"/>
+                        </Form.Group>
+                        <Form.Group controlId="price">
+                            <Form.Label>Price</Form.Label>
+                            <Form.Control type="text" name="price" value={price}
+                                          onChange={e => setPrice(e.target.value)}
+                                          placeholder="Enter Price"/>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={event => close(event)}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={event => addItem(event)}>
+                        Save
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
-                <Modal centered show={newImage} onHide={close}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Add new Image</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            {tempUrl !== '' && tempUrl !== null && tempUrl !== undefined ?
-                                <img width='100%' height='100%' className='mb-2' src={'/uploads/' + tempUrl} /> :
-                                null
-                            }
-                            <Form.Group>
-                                <Form.Control type="file" onChange={event => changeSelectedImage(event)}/>
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={event => close(event)}>
-                            Close
-                        </Button>
-                        <Button variant="danger" onClick={event => deleteFile(event)}>
-                            Delete
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            </React.Fragment>
-        )
-    }
+            <Modal centered show={newImage} onHide={close}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add new Image</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        {tempUrl !== '' && tempUrl !== null && tempUrl !== undefined ?
+                            <img width='100%' height='100%' className='mb-2' src={'/uploads/' + tempUrl}/> :
+                            null
+                        }
+                        <Form.Group>
+                            <Form.Control type="file" onChange={event => changeSelectedImage(event)}/>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={event => close(event)}>
+                        Close
+                    </Button>
+                    <Button variant="danger" onClick={event => deleteFile(event)}>
+                        Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </React.Fragment>
+    )
 
 };
 

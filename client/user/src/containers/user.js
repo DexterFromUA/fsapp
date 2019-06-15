@@ -4,9 +4,8 @@ import {bindActionCreators} from "redux";
 import MainComponent from '../components/MainComponent';
 import {getItems} from '../actions/actionCreators/getItems';
 import {getFilteredItems} from '../actions/actionCreators/getFilteredItems';
-import {amount} from "../actions/amount";
 import {page} from "../actions/page";
-import filter from "../actions/filter";
+import {filter, amount} from "../actions/filter";
 import {addToCart, inc, dec, deleteFromCart, cleanUp} from "../actions/cart";
 
 const mapStateToProps = state => {
