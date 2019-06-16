@@ -1,3 +1,5 @@
+import Alert from 'react-s-alert';
+
 import {
     loadingItems,
     errorItems,
@@ -23,11 +25,13 @@ export const getItemsList = (page) => {
                 return res.json()
             })
             .then(res => {
-                console.log(res)
                 dispatch(setAmount(res.count));
                 dispatch(getItems(res.rows));
             })
-            .catch(e => dispatch(errorItems(e)))
+            .catch(e => {
+                dispatch(errorItems(e));
+                Alert.error(e)
+            })
             .finally(() => dispatch(loadingItems(false)))
     }
 };
@@ -45,13 +49,15 @@ export const addItemToList = item => {
         fetch('/api/add', options)
             .then(res => {
                 if (!res.ok) {
-                    throw new Error('error adding items')
+                    throw new Error('Error adding items')
                 }
 
                 dispatch(addItem(item));
+                Alert.success('Added')
             })
             .catch(e => {
                 dispatch(errorItems(e));
+                Alert.error(e)
             })
     }
 };
@@ -69,13 +75,15 @@ export const changeItem = item => {
         fetch(`/api/edit/${item.id}`, options)
             .then(res => {
                 if (!res.ok) {
-                    throw new Error('error editing item')
+                    throw new Error('Error while editing item')
                 }
 
                 dispatch(editItem(item));
+                Alert.success('Changed')
             })
             .catch(e => {
                 dispatch(errorItems(e));
+                Alert.error(e)
             })
     }
 
@@ -90,13 +98,15 @@ export const removeItem = id => {
         fetch(`/api/remove/${id}`, options)
             .then(res => {
                 if (!res.ok) {
-                    throw new Error('error deleting item')
+                    throw new Error('Error while deleting item')
                 }
 
                 dispatch(deleteItem(id));
+                Alert.success('Removed')
             })
             .catch(e => {
                 dispatch(errorItems(e.toString()));
+                Alert.error(e)
             })
     }
 };
@@ -111,12 +121,16 @@ export const imageChange = (id, name, image) => {
         fetch(`/api/upload/${id}`, options)
             .then(res => {
                 if (!res.ok) {
-                    throw new Error('error while changing image')
+                    throw new Error('Error while changing image')
                 }
 
-                dispatch(changeImage(id, name))
+                dispatch(changeImage(id, name));
+                Alert.success('Image changed')
             })
-            .catch(e => dispatch(errorItems(e.toString())))
+            .catch(e => {
+                dispatch(errorItems(e.toString()));
+                Alert.error(e)
+            })
     }
 };
 
@@ -133,8 +147,12 @@ export const removeImage = (id, url) => {
                     throw new Error('error deleting image')
                 }
 
-                dispatch(deleteImage(id))
+                dispatch(deleteImage(id));
+                Alert.success('Image removed')
             })
-            .catch(e => dispatch(errorItems(e.toString())))
+            .catch(e => {
+                dispatch(errorItems(e.toString()));
+                Alert.error(e)
+            })
     }
 };

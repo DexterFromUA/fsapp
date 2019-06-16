@@ -20,6 +20,6 @@ router.put('/users/makeadmin/:id', usersController.admin);
 
 router.get('/orders', ordersController.getOrders);
 router.post('/order', ordersController.setOrder);
-router.put('/orders/:id', ordersController.changeOrder);
+router.put('/status/change/:id', ordersController.changeStatus);
 
 module.exports = router;

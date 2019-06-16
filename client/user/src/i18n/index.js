@@ -2,45 +2,12 @@ import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
+import ru from './ru/locale';
+import en from './en/locale';
+
 const resources = {
-    en: {
-        translation: {
-            'Cart': 'Cart',
-            'Filters': 'Filters',
-            'Amount items at one page': 'Amount items at one page',
-            'Set': 'Set',
-            'Filter by Date': 'Filter by Date',
-            'Filter': 'Filter',
-            'Clear Filter': 'Clear Filter',
-            'Add': 'Add',
-            'have no items': 'Have no items',
-            'Language': 'Language',
-            'Title': 'Title',
-            'Amount': 'Amount',
-            'Price': 'Price',
-            'Clean Up': 'Clean Up',
-            'Total amount of your order': 'Total amount of your order'
-        }
-    },
-    ru: {
-        translation: {
-            'Cart': 'Корзина',
-            'Filters': 'Фильтры',
-            'Amount items at one page': 'Количество книг на одной странице',
-            'Set': 'Установить',
-            'Filter by Date': 'Фильтр по дате',
-            'Filter': 'Фильтровать',
-            'Clear Filter': 'Очистить фильтр',
-            'Add': 'В корзину',
-            'have no items': 'Пусто',
-            'Language': 'Язык',
-            'Title': 'Название',
-            'Amount': 'Количество',
-            'Price': 'Цена (общая)',
-            'Clean Up': 'Очистить',
-            'Total amount of your order': 'Общая сумма заказа'
-        }
-    }
+    en: en,
+    ru: ru
 };
 
 i18n
@@ -48,7 +15,7 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        // lng: 'en',
+        lng: 'en',
         fallbackLng: 'en',
         saveMissing: true,
         keySeparator: false,

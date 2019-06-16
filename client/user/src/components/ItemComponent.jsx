@@ -32,7 +32,7 @@ const ItemComponent = (props) => {
             <Card className="text-center mb-3">
                 {
                     item.fileUrl !== null && item.fileUrl !== undefined && item.fileUrl !== '' ?
-                        <Card.Img variant="top" height="300px"
+                        <Card.Img variant="top" height="350px"
                                   src={'/uploads/' + item.fileUrl}/> : ''
                 }
                 <Card.Body>

@@ -29,7 +29,8 @@ const initialState = {
 
 const persistConfig = {
     key: 'root',
-    storage: storage
+    storage: storage,
+    whitelist: []
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -25,9 +25,7 @@ export default (state, action) => {
 
         case 'CHANGE_STATUS':
             return Object.assign({}, state, {
-                orders: state.orders.map(item => {
-                    return item.id === action.payload.id ? item.status = action.payload.status : item;
-                })
+                orders: state.orders.map(item => item.id === action.payload.id ? Object.assign({}, item, {status: action.payload.status}) : item)
             });
 
         default:

@@ -1,7 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const ordersmodel = sequelize.define('ordersmodel', {
-    userid: DataTypes.INTEGER
+    userid: DataTypes.INTEGER,
+    status: DataTypes.STRING
   }, {});
   ordersmodel.associate = function(models) {
     ordersmodel.belongsTo(models.usersModel, {foreignKey: 'userid'});

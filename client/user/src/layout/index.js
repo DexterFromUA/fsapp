@@ -116,7 +116,7 @@ const Layout = (props) => {
                             </Menu>
                         </div>
                         <Button color="inherit" onClick={toggleDrawer('right', true)}>
-                            <Badge color="secondary" badgeContent={102}>
+                            <Badge color="secondary" badgeContent={props.cart.length}>
                                 <ShoppingBasket/>
                             </Badge>
                         </Button>
@@ -138,7 +138,7 @@ const Layout = (props) => {
                     className={classes.listRight}
                     role="presentation"
                 >
-                    <CartComponent cart={props.cart} inc={props.inc} dec={props.dec} deleteFromCart={props.deleteFromCart} cleanUp={props.cleanUp} />
+                    <CartComponent toggleCart={toggleCart} cart={props.cart} inc={props.inc} dec={props.dec} deleteFromCart={props.deleteFromCart} cleanUp={props.cleanUp} />
                 </div>
             </Drawer>
         </React.Fragment>

@@ -29,14 +29,17 @@ module.exports = {
                  })))
                      .then(result => res.status(200).send(result))
              })
-             .catch(error => {
-                 console.log(error);
-                 res.status(400).send(error)
-             })
+             .catch(error => res.status(400).send(error))
     },
-    changeOrder: (req, res) => {
+    changeStatus: (req, res) => {
         return Order
-            .update()
+            .update({
+                status: req.body.status
+            },{
+                where: {
+                    id: req.params.id
+                }
+            })
             .then(result => res.status(200).send(result))
             .catch(error => res.status(400).send(error))
     }

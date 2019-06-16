@@ -139,19 +139,19 @@ const ListItem = (props) => {
                         <ListGroupItem>
                             <Container>
                                 <Row className="align-items-center">
-                                    <Col>
+                                    <Col sm={12} md={6} lg={7} xl={8}>
                                         <b>{item.title}</b>, <i>{item.author}, {item.bookyear}</i> {item.price ? ' --- $' + item.price : ''}
                                     </Col>
-                                    <Col className="">
-                                        <Button disabled={item.id ? false : true}
+                                    <Col sm={12} md={6} lg={5} xl={4}>
+                                        <Button disabled={item.id ? false : true} size="sm"
                                                 onClick={(event) => remove(event, item.id)} key={index}
                                                 variant='outline-danger' className="ml-1 float-right">Remove</Button>
                                         <Button disabled={item.id ? false : true} onClick={(event) => edit(event, item)}
-                                                key={index} variant='outline-warning'
+                                                key={index} variant='outline-warning' size="sm"
                                                 className="float-right">Edit</Button>
                                         <Button disabled={item.id ? false : true}
                                                 onClick={(event) => addImage(event, item.id, item.fileUrl)} key={index}
-                                                variant='outline-primary'
+                                                variant='outline-primary' size='sm'
                                                 className="mr-1 float-right">{item.fileUrl ? 'Change Image' : 'Add Image'}</Button>
                                     </Col>
                                 </Row>

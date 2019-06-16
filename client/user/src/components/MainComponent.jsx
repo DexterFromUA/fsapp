@@ -20,7 +20,16 @@ const MainComponent = (props) => {
 
     if (props.isLoading) {
         return (
-            <Layout>
+            <Layout
+                amount={props.amount}
+                setAmount={props.setAmount}
+                setFilter={props.setFilter}
+                cart={props.cart}
+                inc={props.inc}
+                dec={props.dec}
+                deleteFromCart={props.deleteFromCart}
+                cleanUp={props.cleanUp}
+            >
                 <Loading/>
             </Layout>
         )

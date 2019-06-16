@@ -1,10 +1,16 @@
 import React from 'react';
-import {ListGroup, ListGroupItem, Container, Row, Table} from 'react-bootstrap';
+import {ListGroup, ListGroupItem, Container, Row, Table, Form} from 'react-bootstrap';
 
 const OrderList = (props) => {
     React.useEffect(() => {
         props.getOrders()
     }, []);
+
+    const changeStatus = (event, id) => {
+        event.preventDefault();
+
+        props.changeOrderStatus(id, event.target.value)
+    };
 
     if (!props.orders.length) {
         return (
@@ -20,7 +26,8 @@ const OrderList = (props) => {
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Order</th>
+                    <th>Order(s)</th>
+                    <th>Price(s)</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -38,7 +45,24 @@ const OrderList = (props) => {
                         }
                         </Container>
                     </td>
-                    <td>Status</td>
+                    <td>
+                        <Container>
+                            {
+                                item.ordersProducts.map(pr => <Row>
+                                    ${pr.productsmodel.price} x {pr.amount} = ${pr.productsmodel.price * pr.amount}
+                                </Row>)
+                            }
+                        </Container>
+                    </td>
+                    <td>
+                        <Form.Group>
+                            <Form.Control as="select" onChange={event => changeStatus(event, item.id)}>
+                                <option selected={item.status === 'Pending'}>Pending</option>
+                                <option selected={item.status === 'In Processing'}>In Processing</option>
+                                <option selected={item.status === 'Done'}>Done</option>
+                            </Form.Control>
+                        </Form.Group>
+                    </td>
                 </tr>)
             }
             </tbody>
