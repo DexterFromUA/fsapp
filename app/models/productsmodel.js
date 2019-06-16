@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     fileUrl: DataTypes.STRING
   }, {});
   productsmodel.associate = function(models) {
-    //productsmodel.hasMany(models.ordersProducts, {foreignKey: 'productId'})
+    //productsmodel.hasMany(models.ordersProducts, {foreignKey: 'productId', sourceKey: 'id'})
   };
   return productsmodel;
 }

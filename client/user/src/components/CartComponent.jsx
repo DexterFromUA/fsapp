@@ -68,10 +68,8 @@ const CartComponent = (props) => {
 
                 return res;
             })
-            .catch(e => console.log(e))
+            .catch(e => console.error(e))
             .finally(() => setLoading(false));
-
-        console.log(data)
     };
 
     if (props.cart.length <= 0) {

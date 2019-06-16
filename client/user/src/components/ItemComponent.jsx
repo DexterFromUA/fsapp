@@ -8,16 +8,6 @@ const ItemComponent = (props) => {
     const addItem = (event, item) => {
         event.preventDefault();
 
-        // props.cart.length > 0 ?
-        //     props.cart.map(book => {
-        //         if (item.id !== book.id) {
-        //             return props.addToCart(item)
-        //         }
-        //         if (item.id === book.id) {
-        //             return props.inc(item.id)
-        //         }
-        //     }) : props.addToCart(item)
-
         const arrOfIds = props.cart.map(item => item.id);
 
         if (arrOfIds.includes(item.id)) {

@@ -21,7 +21,6 @@ import {useTranslation} from 'react-i18next'
 
 import FilterComponent from '../components/FilterComponent';
 import CartComponent from '../components/CartComponent';
-import {deleteFromCart} from "../actions/cart";
 
 const useStyles = makeStyles(theme => ({
     root: {

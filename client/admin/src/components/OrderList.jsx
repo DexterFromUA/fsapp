@@ -1,5 +1,5 @@
 import React from 'react';
-import {ListGroup, ListGroupItem, Container, Row, Col} from 'react-bootstrap';
+import {ListGroup, ListGroupItem, Container, Row, Table} from 'react-bootstrap';
 
 const OrderList = (props) => {
     React.useEffect(() => {
@@ -15,36 +15,34 @@ const OrderList = (props) => {
     }
 
     return (
-        <ListGroup>
+        <Table responsive>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Order</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
             {
-                props.orders.map(order =>
-                    <ListGroupItem>
+                props.orders.map(item => <tr>
+                    <td>{item.id}</td>
+                    <td>{item.usersModel.name}, {item.usersModel.lastName}</td>
+                    <td>
                         <Container>
-                            <Row>
-                                <Col>
-                                    {order.id}
-                                </Col>
-                                <Col>
-                                    {order.usersModel.name}, {order.usersModel.lastName}
-                                </Col>
-                                {/*<Col>*/}
-                                {/*    <ListGroup>*/}
-                                {/*        {*/}
-                                {/*            order.books.map(book =>*/}
-                                {/*                <ListGroupItem>*/}
-                                {/*                    {book}*/}
-                                {/*                </ListGroupItem>)*/}
-                                {/*        }*/}
-                                {/*    </ListGroup>*/}
-                                {/*</Col>*/}
-                                {/*<Col>*/}
-                                {/*    {order.totalPrice}*/}
-                                {/*</Col>*/}
-                            </Row>
+                        {
+                            item.ordersProducts.map(product => <Row>
+                                {product.productsmodel.title} x {product.amount}
+                            </Row>)
+                        }
                         </Container>
-                    </ListGroupItem>)
+                    </td>
+                    <td>Status</td>
+                </tr>)
             }
-        </ListGroup>
+            </tbody>
+        </Table>
     )
 };
 

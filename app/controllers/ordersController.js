@@ -1,13 +1,17 @@
 const Order = require('../models').ordersmodel;
 const User = require('../models').usersModel;
-const Product = require('../models').ordersProducts;
-//const Products = require('../models').productsmodel;
+const OrderMiddle = require('../models').ordersProducts;
+const Products = require('../models').productsmodel;
 
 module.exports = {
     getOrders: (req, res) => {
         return Order
             .findAll({
-                include: [User, Product]
+                include: [
+                    User,
+                    {model: OrderMiddle, include: [Products]}
+                ],
+                order: [['createdAt', 'DESC']]
             })
             .then(result => res.status(200).send(result))
             .catch(error => res.status(400).send(error))
@@ -15,17 +19,20 @@ module.exports = {
     setOrder: (req, res) => {
          return Order
              .create({
-                 userid: 1
+                 userid: 50
              })
              .then(result => {
-                 Promise.all(req.body.map(item => Product.create({
+                 Promise.all(req.body.map(item => OrderMiddle.create({
                      orderId: result.dataValues.id,
                      productId: item[0],
                      amount: item[1]
                  })))
                      .then(result => res.status(200).send(result))
              })
-             .catch(error => res.status(400).send(error))
+             .catch(error => {
+                 console.log(error);
+                 res.status(400).send(error)
+             })
     },
     changeOrder: (req, res) => {
         return Order

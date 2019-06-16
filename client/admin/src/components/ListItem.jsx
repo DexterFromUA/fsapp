@@ -262,7 +262,7 @@ const ListItem = (props) => {
                 <Modal.Body>
                     <Form>
                         {tempUrl !== '' && tempUrl !== null && tempUrl !== undefined ?
-                            <img width='100%' height='100%' className='mb-2' src={'/uploads/' + tempUrl}/> :
+                            <img alt={tempUrl} width='100%' height='100%' className='mb-2' src={'/uploads/' + tempUrl}/> :
                             null
                         }
                         <Form.Group>
