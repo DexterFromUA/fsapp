@@ -23,14 +23,12 @@ app.set('view engine', 'html');
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(cors());
+//app.use(cors());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Methods', '*');
-    res.header('Access-Control-Expose-Headers', 'Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     return next();
 });
 
@@ -47,7 +45,7 @@ app.use(session({
     saveUninitialized: true
 }));
 app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.session());
 app.use(flash());
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -62,7 +60,7 @@ app.use('/error', function (req, res) {
 app.use(function (req, res, next) {
     next(createError(404));
 });
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 

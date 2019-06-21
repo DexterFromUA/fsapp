@@ -28,8 +28,8 @@ router.post('/', function (req, res, next) {
 
                 const token = jwt.sign({user: payload}, process.env.SECRET);
 
-                //res.cookie('token', 'bearer ' + token).redirect('/')
-                res.setHeader('Authorization', token);
+                res.cookie('token', token);
+                res.header('Authorization', 'Bearer ' + token);
                 res.redirect('/');
             });
         } catch (e) {

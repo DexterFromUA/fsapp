@@ -21,7 +21,7 @@ const initialState = {
 };
 
 const persistConfig = {
-    key: 'root',
+    key: 'user',
     storage: storage,
     whitelist: [
         'amount'

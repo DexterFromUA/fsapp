@@ -41,7 +41,7 @@ module.exports = (passport) => {
     }));
 
     passport.use('jwt', new JwtStrategy({
-        jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken('Authorization'),
         secretOrKey: process.env.SECRET
     }, (token, done) => {
         console.log('TOKEN!!!', token);

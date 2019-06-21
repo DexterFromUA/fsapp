@@ -28,7 +28,7 @@ const initialState = {
 };
 
 const persistConfig = {
-    key: 'root',
+    key: 'admin',
     storage: storage,
     whitelist: []
 };
