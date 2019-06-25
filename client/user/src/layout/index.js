@@ -105,6 +105,37 @@ const Layout = (props) => {
         setLogin(false);
     };
 
+    const send = event => {
+        event.preventDefault();
+
+        const form = new FormData();
+        form.append('email', mail);
+        form.append('password', password);
+
+        fetch('/signin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `email=${mail}&password=${password}`
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('error while logging in')
+                }
+
+                return res.json();
+            })
+            .then(res => {
+                localStorage.setItem('Token', res.token);
+                props.login(res.user);
+            })
+            .catch(e => console.error(e));
+
+        setLogin('');
+        setPassword('');
+    };
+
     return (
         <React.Fragment>
             <CssBaseline/>
@@ -119,9 +150,9 @@ const Layout = (props) => {
                             Book Shop
                         </Typography>
 
-                        <Button color="inherit" onClick={event => showLogin(event)}>
-                            Login
-                        </Button>
+                        {
+                            props.user === null ? <Button color="inherit" onClick={event => showLogin(event)}>Login</Button> : props.user.firstName
+                        }
 
                         <div>
                             <Button color="inherit" aria-controls="simple-menu" aria-haspopup="true"
@@ -148,7 +179,9 @@ const Layout = (props) => {
                 </AppBar>
             </HideOnScroll>
             <Toolbar/>
+
             {props.children}
+
             <Drawer open={menu} onClose={toggleDrawer('left', false)}>
                 <div
                     className={classes.list}
@@ -196,7 +229,7 @@ const Layout = (props) => {
                     <Button variant="secondary" onClick={event => close(event)}>
                         Close
                     </Button>
-                    <Button variant="danger">
+                    <Button variant="danger" onClick={event => send(event)}>
                         Sign In
                     </Button>
                 </Modal.Footer>

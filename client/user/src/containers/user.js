@@ -7,6 +7,7 @@ import {getFilteredItems} from '../actions/actionCreators/getFilteredItems';
 import {page} from "../actions/page";
 import {filter, amount} from "../actions/filter";
 import {addToCart, inc, dec, deleteFromCart, cleanUp} from "../actions/cart";
+import {login} from '../actions/user';
 
 const mapStateToProps = state => {
     return {
@@ -32,7 +33,8 @@ const mapDispatchToProps = dispatch => {
         inc,
         deleteFromCart,
         dec,
-        cleanUp
+        cleanUp,
+        login
     }, dispatch)
 };
 

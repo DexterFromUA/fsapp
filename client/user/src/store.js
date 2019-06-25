@@ -24,7 +24,8 @@ const persistConfig = {
     key: 'user',
     storage: storage,
     whitelist: [
-        'amount'
+        'amount',
+        'cart'
     ]
 };
 

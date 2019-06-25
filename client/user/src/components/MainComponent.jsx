@@ -15,6 +15,25 @@ const MainComponent = (props) => {
     };
 
     React.useEffect(() => {
+        fetch('/signin/check', {
+            method: 'POST',
+            headers: {
+                'Authorization': localStorage.getItem('Token')
+            }
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('token not found')
+                }
+
+                return res.json()
+            })
+            .then(res => {
+                localStorage.setItem('Token', res.token);
+                props.login(res.user);
+            })
+            .catch(e => console.error(e));
+
         props.filter.status ? getFilteredItems() : getAllItems() //TODO when calling filtered items, send old page state. Need first
     }, [props.page, props.filter, props.amount, props.lng]);
 
@@ -29,6 +48,8 @@ const MainComponent = (props) => {
                 dec={props.dec}
                 deleteFromCart={props.deleteFromCart}
                 cleanUp={props.cleanUp}
+                user={props.user}
+                login={props.login}
             >
                 <Loading/>
             </Layout>
@@ -44,6 +65,8 @@ const MainComponent = (props) => {
                 dec={props.dec}
                 deleteFromCart={props.deleteFromCart}
                 cleanUp={props.cleanUp}
+                user={props.user}
+                login={props.login}
         >
             <Container className="mt-4">
                 <Row>
