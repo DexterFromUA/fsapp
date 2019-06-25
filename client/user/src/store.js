@@ -11,7 +11,7 @@ const initialState = {
     isLoading: true,
     items: {},
     amount: 12,
-    user: {},
+    user: null,
     cart: [],
     page: 1,
     filter: {

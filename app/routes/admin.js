@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const path = require('path');
 
-router.get('/', (req, res, next) => {
-    res.render(path.join(__dirname, '..', 'client', 'admin', 'build', 'i18n.js.html'))
+router.get('/*', (req, res, next) => {
+    res.sendFile(path.join(__dirname + '/../client/admin/index.html'))
 });
 
 module.exports = router;

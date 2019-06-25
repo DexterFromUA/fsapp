@@ -28,6 +28,7 @@ module.exports = (passport) => {
     });
 
     passport.use('login', new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
+        console.log('fdgdfgdfgdfgdfgdfgdfgdfg!!!!!!!', email);
         usersController.findByMail(email)
             .then(user => {
                 if (!user) {
@@ -37,14 +38,13 @@ module.exports = (passport) => {
                 } else
                     return done(null, user.dataValues, {message: 'success'});
             })
-            .catch(e => done(e))
+            .catch(e => done(e, false, 'error while authenticate'))
     }));
 
     passport.use('jwt', new JwtStrategy({
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken('Authorization'),
         secretOrKey: process.env.SECRET
     }, (token, done) => {
-        console.log('TOKEN!!!', token);
         try {
             return done(null, token.user)
         } catch (e) {

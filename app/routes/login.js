@@ -4,10 +4,6 @@ const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 
-router.get('/', function (req, res, next) {
-    res.render('login');
-});
-
 router.post('/', function (req, res, next) {
     passport.authenticate('login', {}, (err, user, info) => {
         try {
@@ -28,9 +24,16 @@ router.post('/', function (req, res, next) {
 
                 const token = jwt.sign({user: payload}, process.env.SECRET);
 
-                res.cookie('token', token);
-                res.header('Authorization', 'Bearer ' + token);
-                res.redirect('/');
+                //res.cookie('token', token);
+                res.json({
+                    token: 'Bearer ' + token,
+                    user: {
+                        firstName: user.name,
+                        lastName: user.lastName
+                    }
+                });
+                // res.setHeader('Authorization', 'Bearer ' + token);
+                // res.redirect('/');
             });
         } catch (e) {
             return next(e)

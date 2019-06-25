@@ -23,20 +23,17 @@ app.set('view engine', 'html');
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-//app.use(cors());
-
+app.use(cors());
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
     return next();
 });
-
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true})); //TODO ? changed to TRUE
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     genid: () => uuid(),
     secret: process.env.SECRET,
@@ -45,15 +42,17 @@ app.use(session({
     saveUninitialized: true
 }));
 app.use(passport.initialize());
-//app.use(passport.session());
 app.use(flash());
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Routes area
+app.use(express.static(path.join(__dirname, 'client', 'user')));
 app.use('/', require('./routes/user'));
-app.use('/login', require('./routes/login'));
-app.use('/signup', require('./routes/signup'));
+app.use(express.static(path.join(__dirname, 'client', 'admin')));
 app.use('/admin', require('./routes/admin'));
+app.use('/signup', require('./routes/signup'));
 app.use('/api', require('./routes/api'));
+app.use('/signin', require('./routes/login'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/error', function (req, res) {
     res.render('error')
 });
