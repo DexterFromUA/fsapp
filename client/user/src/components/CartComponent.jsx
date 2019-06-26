@@ -87,10 +87,12 @@ const CartComponent = (props) => {
             setError(false);
 
             const data = props.cart.map(item => [item.id, item.count]);
+            const token = 'Bearer ' + localStorage.getItem('Token');
 
             const options = {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': token
                 },
                 method: 'POST',
                 body: JSON.stringify(data)

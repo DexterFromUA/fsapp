@@ -15,6 +15,14 @@
     "Price": "Price",
     "Clean Up": "Clean Up",
     "Total amount of your order": "Total amount of your order",
-    "Order": "Order"
+    "Order": "Order",
+    "Login": "Login",
+    "Email address": "Email address",
+    "Enter email": "Enter email",
+    "We'll never share your email with anyone else": "We'll never share your email with anyone else",
+    "Password": "Password",
+    "Close": "Close",
+    "Sign In": "Sign In",
+    "Logout": "Logout"
   }
 }

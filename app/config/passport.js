@@ -8,27 +8,15 @@ const passwordUtility = require('../helpers/passwordUtility');
 require('dotenv').config();
 
 module.exports = (passport) => {
-    passport.serializeUser((user, done) => {
-        console.log('SERIALIZE!!!', user);
-        return done(null, user.id)
-    });
-
-    passport.deserializeUser((id, done) => {
-        // usersController.findById(id)
-        //     .then(user => {
-        //         console.log('USER!!!', user);
-        //         if (user) {
-        //             done(null, user.get())
-        //         } else {
-        //             done(user.error)
-        //         }
-        //     })
-        console.log('DESERIALIZE!!!', id);
-        return done(null, id)
-    });
+    // passport.serializeUser((user, done) => {
+    //     return done(null, user.id)
+    // });
+    //
+    // passport.deserializeUser((id, done) => {
+    //     return done(null, id)
+    // });
 
     passport.use('login', new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
-        console.log('fdgdfgdfgdfgdfgdfgdfgdfg!!!!!!!', email);
         usersController.findByMail(email)
             .then(user => {
                 if (!user) {
@@ -46,7 +34,15 @@ module.exports = (passport) => {
         secretOrKey: process.env.SECRET
     }, (token, done) => {
         try {
-            return done(null, token.user)
+            usersController.findByMail(token.user.email)
+                .then(user => {
+                    if (!user) {
+                        return done(null, false, {message: 'incorrect user'})
+                    } else {
+                        return done(null, token.user)
+                    }
+                })
+                .catch(e => done(e, false, 'error while authenticate'))
         } catch (e) {
             return done(e)
         }

@@ -6,6 +6,8 @@ const productsController = require('../controllers/productsController');
 const usersController = require('../controllers/usersController');
 const ordersController = require('../controllers/ordersController');
 
+const authMiddleware = require('../middlewares/auth');
+
 router.get('/all/:amount/:page', productsController.findAll);
 router.get('/filtered/:amount/:page/:start/:end', productsController.findAllWithFilter);
 router.post('/add', productsController.add);
@@ -19,7 +21,7 @@ router.delete('/users/:id', usersController.remove);
 router.put('/users/makeadmin/:id', usersController.admin);
 
 router.get('/orders', ordersController.getOrders);
-router.post('/order', ordersController.setOrder);
+router.post('/order', authMiddleware.isLoggedIn, ordersController.setOrder);
 router.put('/status/change/:id', ordersController.changeStatus);
 
 module.exports = router;

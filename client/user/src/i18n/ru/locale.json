@@ -15,6 +15,14 @@
     "Price": "Цена (общая)",
     "Clean Up": "Очистить",
     "Total amount of your order": "Общая сумма заказа",
-    "Order": "Заказать"
+    "Order": "Заказать",
+    "Login": "Логин",
+    "Email address": "Почтовый адресс",
+    "Enter email": "Введите почту",
+    "We'll never share your email with anyone else": "Мы не разглашаем вашу почту",
+    "Password": "Пароль",
+    "Close": "Закрыть",
+    "Sign In": "Войти",
+    "Logout": "Выйти"
   }
 }

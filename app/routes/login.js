@@ -24,16 +24,14 @@ router.post('/', function (req, res, next) {
 
                 const token = jwt.sign({user: payload}, process.env.SECRET);
 
-                //res.cookie('token', token);
                 res.json({
-                    token: 'Bearer ' + token,
+                    token: token,
                     user: {
                         firstName: user.name,
-                        lastName: user.lastName
+                        lastName: user.lastName,
+                        role: user.role
                     }
                 });
-                // res.setHeader('Authorization', 'Bearer ' + token);
-                // res.redirect('/');
             });
         } catch (e) {
             return next(e)
@@ -62,10 +60,11 @@ router.post('/check', function (req, res, next) {
                 const token = jwt.sign({user: payload}, process.env.SECRET);
 
                 res.json({
-                    token: 'Bearer ' + token,
+                    token: token,
                     user: {
                         firstName: user.name,
-                        lastName: user.lastName
+                        lastName: user.lastName,
+                        role: user.role
                     }
                 });
             });

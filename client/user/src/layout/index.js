@@ -59,6 +59,7 @@ const Layout = (props) => {
     const [mail, setMail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [menuEl, setMenuEl] = React.useState(null);
     const {t, i18n} = useTranslation();
 
     const classes = useStyles();
@@ -69,6 +70,14 @@ const Layout = (props) => {
 
     function handleClose() {
         setAnchorEl(null);
+    }
+
+    function menuClick(event) {
+        setMenuEl(event.currentTarget);
+    }
+
+    function menuClose() {
+        setMenuEl(null);
     }
 
     function handleLng(event, lng) {
@@ -108,29 +117,7 @@ const Layout = (props) => {
     const send = event => {
         event.preventDefault();
 
-        const form = new FormData();
-        form.append('email', mail);
-        form.append('password', password);
-
-        fetch('/signin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `email=${mail}&password=${password}`
-        })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error('error while logging in')
-                }
-
-                return res.json();
-            })
-            .then(res => {
-                localStorage.setItem('Token', res.token);
-                props.login(res.user);
-            })
-            .catch(e => console.error(e));
+        props.loginUser(mail, password);
 
         setLogin('');
         setPassword('');
@@ -151,7 +138,22 @@ const Layout = (props) => {
                         </Typography>
 
                         {
-                            props.user === null ? <Button color="inherit" onClick={event => showLogin(event)}>Login</Button> : props.user.firstName
+                            props.user === null ?
+                                <Button color="inherit" onClick={event => showLogin(event)}>{t('Login')}</Button> :
+                                <div>
+                                    <Button color="inherit" aria-controls="simple-menu" aria-haspopup="true" onClick={menuClick}>
+                                        {props.user.firstName + ' ' + props.user.lastName}
+                                    </Button>
+                                    <Menu
+                                        id="simple-menu"
+                                        anchorEl={menuEl}
+                                        keepMounted
+                                        open={Boolean(menuEl)}
+                                        onClose={menuClose}
+                                    >
+                                        <MenuItem onClick={menuClose}>{t('Logout')}</MenuItem>
+                                    </Menu>
+                                </div>
                         }
 
                         <div>
@@ -203,23 +205,23 @@ const Layout = (props) => {
 
             <Modal centered show={login} onHide={close}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Login</Modal.Title>
+                    <Modal.Title>{t('Login')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form className="p-5">
                         <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" name="email" placeholder="Enter email"
+                            <Form.Label>{t('Email address')}</Form.Label>
+                            <Form.Control type="email" name="email" placeholder={t('Enter email')}
                                           value={mail} onChange={event => setMail(event.target.value)}
                             />
                             <Form.Text className="text-muted">
-                                We'll never share your email with anyone else.
+                                {t("We'll never share your email with anyone else")}
                             </Form.Text>
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" name="password" placeholder="Password"
+                            <Form.Label>{t('Password')}</Form.Label>
+                            <Form.Control type="password" name="password" placeholder={t('Password')}
                                           value={password} onChange={event => setPassword(event.target.value)}
                             />
                         </Form.Group>
@@ -227,10 +229,10 @@ const Layout = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={event => close(event)}>
-                        Close
+                        {t('Close')}
                     </Button>
                     <Button variant="danger" onClick={event => send(event)}>
-                        Sign In
+                        {t('Sign In')}
                     </Button>
                 </Modal.Footer>
             </Modal>
