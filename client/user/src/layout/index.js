@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter} from 'react-router';
+import {withRouter, Link} from 'react-router-dom';
 import {Form, Modal} from 'react-bootstrap';
 import {
     Button,
@@ -73,6 +73,7 @@ const Layout = (props) => {
     }
 
     function menuClick(event) {
+        event.preventDefault();
         setMenuEl(event.currentTarget);
     }
 
@@ -103,6 +104,9 @@ const Layout = (props) => {
     const showLogin = event => {
         event.preventDefault();
 
+        setMail('');
+        setPassword('');
+
         setLogin(true);
     };
 
@@ -121,6 +125,17 @@ const Layout = (props) => {
 
         setLogin('');
         setPassword('');
+        setMenuEl(null);
+    };
+
+    const logout = event => {
+        event.preventDefault();
+
+        if (localStorage.getItem('Token')) {
+            localStorage.removeItem('Token')
+        }
+
+        props.logoutUser();
     };
 
     return (
@@ -141,28 +156,29 @@ const Layout = (props) => {
                             props.user === null ?
                                 <Button color="inherit" onClick={event => showLogin(event)}>{t('Login')}</Button> :
                                 <div>
-                                    <Button color="inherit" aria-controls="simple-menu" aria-haspopup="true" onClick={menuClick}>
+                                    <Button color="inherit" aria-controls="user-menu" aria-haspopup="true" onClick={menuClick}>
                                         {props.user.firstName + ' ' + props.user.lastName}
                                     </Button>
                                     <Menu
-                                        id="simple-menu"
+                                        id="user-menu"
                                         anchorEl={menuEl}
                                         keepMounted
                                         open={Boolean(menuEl)}
                                         onClose={menuClose}
                                     >
-                                        <MenuItem onClick={menuClose}>{t('Logout')}</MenuItem>
+                                        {props.user.role === 'admin' ? <Link to='/admin'><MenuItem>Admin Panel</MenuItem></Link> : null}
+                                        <MenuItem onClick={event => logout(event)}>{t('Logout')}</MenuItem>
                                     </Menu>
                                 </div>
                         }
 
                         <div>
-                            <Button color="inherit" aria-controls="simple-menu" aria-haspopup="true"
+                            <Button color="inherit" aria-controls="lang-menu" aria-haspopup="true"
                                     onClick={handleClick}>
                                 {t('Language')}
                             </Button>
                             <Menu
-                                id="simple-menu"
+                                id="lang-menu"
                                 anchorEl={anchorEl}
                                 keepMounted
                                 open={Boolean(anchorEl)}
@@ -190,7 +206,7 @@ const Layout = (props) => {
                     role="presentation"
                 >
                     <FilterComponent amount={props.amount} setAmount={props.setAmount} setFilter={props.setFilter}
-                                     getFilteredItems={props.getFilteredItems}/>
+                                     getFilteredItems={props.getFilteredItems} searchItems={props.searchItems}/>
                 </div>
             </Drawer>
             <Drawer open={cart} anchor="right" onClose={toggleDrawer('right', false)}>
@@ -199,7 +215,7 @@ const Layout = (props) => {
                     role="presentation"
                 >
                     <CartComponent toggleCart={toggleCart} cart={props.cart} inc={props.inc} dec={props.dec}
-                                   deleteFromCart={props.deleteFromCart} cleanUp={props.cleanUp}/>
+                                   deleteFromCart={props.deleteFromCart} cleanUp={props.cleanUp} user={props.user}/>
                 </div>
             </Drawer>
 
@@ -228,10 +244,10 @@ const Layout = (props) => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={event => close(event)}>
+                    <Button variant="outlined" onClick={event => close(event)}>
                         {t('Close')}
                     </Button>
-                    <Button variant="danger" onClick={event => send(event)}>
+                    <Button variant="outlined" onClick={event => send(event)}>
                         {t('Sign In')}
                     </Button>
                 </Modal.Footer>

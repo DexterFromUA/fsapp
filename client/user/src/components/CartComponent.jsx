@@ -85,9 +85,13 @@ const CartComponent = (props) => {
             setLoading(true);
             setSuccess(false);
             setError(false);
+            const data = {};
 
-            const data = props.cart.map(item => [item.id, item.count]);
+            const items = props.cart.map(item => [item.id, item.count]);
             const token = 'Bearer ' + localStorage.getItem('Token');
+
+            data.items = items;
+            data.id = props.user.id;
 
             const options = {
                 headers: {
@@ -105,7 +109,6 @@ const CartComponent = (props) => {
                     }
 
                     setSuccess(true);
-                    setLoading(false);
                     setTimeout(() => {
                         props.toggleCart(false);
                         props.cleanUp();
@@ -114,7 +117,6 @@ const CartComponent = (props) => {
                 })
                 .catch(e => {
                     setError(true);
-                    setLoading(false);
                     console.error(e)
                 })
                 .finally(() => setLoading(false));

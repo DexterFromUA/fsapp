@@ -13,8 +13,10 @@ const ItemComponent = (props) => {
         if (arrOfIds.includes(item.id)) {
             props.cart.map(current => {
                 if (current.id === item.id) {
-                    props.inc(item.id);
+                    return props.inc(item.id);  //TODO added return
                 }
+
+                return null
             })
         } else {
             props.addToCart(item);

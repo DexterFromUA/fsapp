@@ -17,6 +17,10 @@ const initialState = {
     filter: {
         status: false,
         date: []
+    },
+    search: {
+        status: false,
+        text: ''
     }
 };
 
@@ -25,7 +29,8 @@ const persistConfig = {
     storage: storage,
     whitelist: [
         'amount',
-        'cart'
+        'cart',
+        'page'
     ]
 };
 

@@ -32,6 +32,8 @@ const MainComponent = (props) => {
                 cleanUp={props.cleanUp}
                 user={props.user}
                 loginUser={props.loginUser}
+                logoutUser={props.logoutUser}
+                searchItems={props.searchItems}
             >
                 <Loading/>
             </Layout>
@@ -49,6 +51,8 @@ const MainComponent = (props) => {
                 cleanUp={props.cleanUp}
                 user={props.user}
                 loginUser={props.loginUser}
+                logoutUser={props.logoutUser}
+                searchItems={props.searchItems}
         >
             <Container className="mt-4">
                 <Row>

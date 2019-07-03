@@ -12,4 +12,6 @@ authMiddleware.isLoggedIn = (req, res, next) => {
     })(req, res, next);
 };
 
+//TODO isADMIN
+
 module.exports = authMiddleware;

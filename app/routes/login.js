@@ -19,7 +19,7 @@ router.post('/', function (req, res, next) {
                     email: user.mail,
                     name: user.name,
                     lastName: user.lastName,
-                    admin: user.role === 'admin' ? true : false
+                    role: user.role
                 };
 
                 const token = jwt.sign({user: payload}, process.env.SECRET);
@@ -27,6 +27,7 @@ router.post('/', function (req, res, next) {
                 res.json({
                     token: token,
                     user: {
+                        id: user.id,
                         firstName: user.name,
                         lastName: user.lastName,
                         role: user.role
@@ -54,7 +55,7 @@ router.post('/check', function (req, res, next) {
                     email: user.mail,
                     name: user.name,
                     lastName: user.lastName,
-                    admin: user.role === 'admin' ? true : false
+                    role: user.role
                 };
 
                 const token = jwt.sign({user: payload}, process.env.SECRET);
@@ -62,6 +63,7 @@ router.post('/check', function (req, res, next) {
                 res.json({
                     token: token,
                     user: {
+                        id: user.id,
                         firstName: user.name,
                         lastName: user.lastName,
                         role: user.role

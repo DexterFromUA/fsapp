@@ -21,6 +21,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(cors());
@@ -45,9 +46,6 @@ app.use(passport.initialize());
 app.use(flash());
 
 // Routes area
-app.use(express.static(path.join(__dirname, 'client', 'user')));
-app.use('/', require('./routes/user'));
-app.use(express.static(path.join(__dirname, 'client', 'admin')));
 app.use('/admin', require('./routes/admin'));
 app.use('/signup', require('./routes/signup'));
 app.use('/api', require('./routes/api'));
@@ -56,6 +54,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/error', function (req, res) {
     res.render('error')
 });
+app.use('/', require('./routes/user'));
 app.use(function (req, res, next) {
     next(createError(404));
 });

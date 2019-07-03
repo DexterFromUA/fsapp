@@ -19,10 +19,10 @@ module.exports = {
     setOrder: (req, res) => {
          return Order
              .create({
-                 userid: 50
+                 userid: req.body.id
              })
              .then(result => {
-                 Promise.all(req.body.map(item => OrderMiddle.create({
+                 Promise.all(req.body.items.map(item => OrderMiddle.create({
                      orderId: result.dataValues.id,
                      productId: item[0],
                      amount: item[1]

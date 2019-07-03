@@ -26,7 +26,7 @@ module.exports = (passport) => {
                 } else
                     return done(null, user.dataValues, {message: 'success'});
             })
-            .catch(e => done(e, false, 'error while authenticate'))
+            .catch(e => done(e, false, {message: 'error while authenticate'}))
     }));
 
     passport.use('jwt', new JwtStrategy({

@@ -11,7 +11,7 @@ module.exports = {
                 lastName: req.body.lastName,
                 mail: req.body.email,
                 password: hashedPassword,
-                role: 'user.js'
+                role: 'user'
             })
             .then(result => res.status(201).send(result))
             .catch(error => res.status(400).send(error))

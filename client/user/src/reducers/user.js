@@ -7,6 +7,9 @@ export default (state, action) => {
         case 'LOGIN':
             return state = action.payload;
 
+        case 'LOGOUT':
+            return state = null;
+
         default:
             return state;
     }

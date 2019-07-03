@@ -1,18 +1,18 @@
-export function inc(id) {
+export const inc = (id) => {
     return {
         type: 'INC',
         payload: id
     }
-}
+};
 
-export function dec(id) {
+export const dec = (id) => {
     return {
         type: 'DEC',
         payload: id
     }
-}
+};
 
-export function addToCart(item) {
+export const addToCart = (item) => {
     return {
         type: 'ADD_TO_CART',
         payload: {
@@ -23,17 +23,17 @@ export function addToCart(item) {
             fullPrice: item.price
         }
     }
-}
+};
 
-export function deleteFromCart(id) {
+export const deleteFromCart = (id) => {
     return {
         type: 'DELETE_FROM_CART',
         payload: id
     }
-}
+};
 
-export function cleanUp() {
+export const cleanUp = () => {
     return {
         type: 'CLEAN_UP'
     }
-}
+};

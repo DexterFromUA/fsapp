@@ -14,3 +14,13 @@ export const amount = (num) => {
         payload: num
     }
 };
+
+export const search = (status, text) => {
+    return {
+        type: 'SEARCH',
+        payload: {
+            status,
+            text
+        }
+    }
+};

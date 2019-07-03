@@ -15,6 +15,7 @@ router.put('/edit/:id', productsController.edit);
 router.delete('/remove/:id', productsController.delete);
 router.put('/upload/:id', uploader, productsController.addImage);
 router.put('/removeupload/:url', productsController.removeImage);
+router.get('/search/:search', productsController.findAllWithSearch);
 
 router.get('/users', usersController.findAll);
 router.delete('/users/:id', usersController.remove);

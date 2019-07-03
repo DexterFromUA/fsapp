@@ -2,11 +2,13 @@ import React from 'react';
 import {Typography, Divider, List, ListItem} from "@material-ui/core";
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import {InputGroup, FormControl, Button} from 'react-bootstrap';
+import {SearchRounded, Clear} from '@material-ui/icons';
 import {useTranslation} from "react-i18next";
 
 const FilterComponent = (props) => {
     const [date, setDate] = React.useState([new Date(), new Date()]);
     const [amount, setAmount] = React.useState(props.amount);
+    const [searchText, setSearchText] = React.useState('');
     const {t} = useTranslation();
 
     const onChangeDate = (dateChange) => {
@@ -33,6 +35,12 @@ const FilterComponent = (props) => {
         props.setFilter(false, []);
     };
 
+    const search = (event) => {
+        event.preventDefault();
+
+        props.searchItems(searchText);
+    };
+
     return (
         <React.Fragment>
             <Typography variant="h5" className="ml-4 mt-4">
@@ -40,6 +48,22 @@ const FilterComponent = (props) => {
             </Typography>
             <Divider/>
             <List>
+                <ListItem>
+                    <InputGroup className="mb-2">
+                        <FormControl type="text" placeholder={t('Search')} className="mr-sm-2" onChange={event => setSearchText(event.target.value)}/>
+                        <InputGroup.Append>
+                            <Button variant="outline-secondary" onClick={event => search(event)}>
+                                <Clear/>
+                            </Button>
+                        </InputGroup.Append>
+                        <InputGroup.Append>
+                            <Button variant="outline-secondary" onClick={event => search(event)}>
+                                <SearchRounded/>
+                            </Button>
+                        </InputGroup.Append>
+                    </InputGroup>
+                </ListItem>
+
                 <ListItem>
                     <Typography>{t('Amount items at one page')}:</Typography>
                 </ListItem>

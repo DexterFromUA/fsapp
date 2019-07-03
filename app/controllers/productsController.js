@@ -41,6 +41,30 @@ module.exports = {
             .then(result => res.status(200).send(result))
             .catch(error => res.status(400).send(error))
     },
+    findAllWithSearch: (req ,res) => {
+        return Product
+            .findAndCountAll({
+                order: [
+                    ['createdAt', 'DESC']
+                ],
+                where: {
+                    [Op.or]: [
+                        {
+                            title: {
+                                [Op.iLike]: '%' + req.params.search
+                            }
+                        },
+                        {
+                            author:{
+                                [Op.iLike]: '%' + req.params.search
+                            }
+                        }
+                    ]
+                }
+            })
+            .then(result => res.status(200).send(result))
+            .catch(error => res.status(400).send(error))
+    },
     edit: (req, res) => {
         return Product
             .update({
