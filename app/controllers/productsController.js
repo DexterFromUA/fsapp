@@ -51,12 +51,12 @@ module.exports = {
                     [Op.or]: [
                         {
                             title: {
-                                [Op.iLike]: '%' + req.params.search
+                                [Op.iLike]: '%' + req.params.search + '%'
                             }
                         },
                         {
                             author:{
-                                [Op.iLike]: '%' + req.params.search
+                                [Op.iLike]: '%' + req.params.search + '%'
                             }
                         }
                     ]
