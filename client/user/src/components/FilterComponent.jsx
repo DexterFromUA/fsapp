@@ -32,12 +32,6 @@ const FilterComponent = () => {
         setAmount(amount);
     };
 
-    const clearFilter = (event) => {
-        event.preventDefault();
-
-        setFilter(false, []);
-    };
-
     const search = (event) => {
         event.preventDefault();
 
@@ -56,11 +50,6 @@ const FilterComponent = () => {
                         <FormControl type="text" placeholder={t('Search')} className="mr-sm-2" onChange={event => setSearchText(event.target.value)}/>
                         <InputGroup.Append>
                             <Button variant="outline-secondary" onClick={event => search(event)}>
-                                <Clear/>
-                            </Button>
-                        </InputGroup.Append>
-                        <InputGroup.Append>
-                            <Button variant="outline-secondary" onClick={event => search(event)}>
                                 <SearchRounded/>
                             </Button>
                         </InputGroup.Append>
@@ -73,6 +62,7 @@ const FilterComponent = () => {
                 <ListItem>
                     <InputGroup className="mb-2">
                         <FormControl
+                            className="mr-sm-2"
                             type='number'
                             placeholder={amount}
                             aria-label="Item count"
@@ -84,7 +74,7 @@ const FilterComponent = () => {
                         </InputGroup.Append>
                     </InputGroup>
                 </ListItem>
-                <Divider/>
+                
                 <ListItem>
                     <Typography>{t('Filter by Date')}:</Typography>
                 </ListItem>
@@ -98,9 +88,6 @@ const FilterComponent = () => {
                 </ListItem>
                 <ListItem>
                     <Button variant="outline-secondary" size="sm" block onClick={event => applyFilter(event)}>{t('Filter')}</Button>
-                </ListItem>
-                <ListItem>
-                    <Button variant="outline-secondary" size="sm" block onClick={event => clearFilter(event)}>{t('Clear Filter')}</Button>
                 </ListItem>
             </List>
         </React.Fragment>

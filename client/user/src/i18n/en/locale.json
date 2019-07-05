@@ -8,7 +8,7 @@
     "Filter": "Filter",
     "Clear Filter": "Clear Filter",
     "Add": "Add",
-    "have no items": "Have no items",
+    "have no items": "Haven't items",
     "Language": "Language",
     "Title": "Title",
     "Amount": "Amount",
@@ -24,6 +24,7 @@
     "Close": "Close",
     "Sign In": "Sign In",
     "Logout": "Logout",
-    "Search": "Search"
+    "Search": "Search",
+    "results": "results"
   }
 }

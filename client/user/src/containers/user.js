@@ -5,7 +5,7 @@ import MainComponent from '../components/MainComponent';
 import {getItems} from '../actions/actionCreators/getItems';
 import {getFilteredItems} from '../actions/actionCreators/getFilteredItems';
 import {page} from "../actions/page";
-import {filter, amount} from "../actions/filter";
+import {filter, amount, search} from "../actions/filter";
 import {addToCart, inc, dec, deleteFromCart, cleanUp} from "../actions/cart";
 import {loginCheck, loginUser} from '../actions/actionCreators/userCreator';
 import {logout} from '../actions/user';
@@ -40,7 +40,8 @@ const mapDispatchToProps = dispatch => {
         loginCheck,
         loginUser,
         logoutUser: logout,
-        searchItems
+        searchItems,
+        searchAction: search
     }, dispatch)
 };
 

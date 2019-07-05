@@ -23,7 +23,11 @@ const MainComponent = props => {
     items: props.items,
     changePage: props.changePage,
     page: props.page,
-    addToCart: props.addToCart
+    addToCart: props.addToCart,
+    search: props.search,
+    getItems: props.getItems,
+    searchAction: props.searchAction,
+    filter: props.filter
   };
 
   const getAllItems = () => {
