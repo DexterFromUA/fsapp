@@ -4,6 +4,8 @@ sessions
 views/user
 views/admin
 uploads
+public/admin
+public/user
 
 //Files
 *.lock
