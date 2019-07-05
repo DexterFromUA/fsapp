@@ -1,34 +1,43 @@
-import React from 'react';
-import {Pagination} from 'react-bootstrap';
+import React from "react";
+import { Pagination } from "react-bootstrap";
 
-const PaginationComponent = (props) => {
-    const arr = [];
+import Ctx from "../context";
 
-    for (let i = 1; i <= Math.ceil(props.items.count / props.amount); i++) {
-        arr.push(i);
+const PaginationComponent = () => {
+  const {items, amountDefault, changePage, page} = React.useContext(Ctx);
+  const arr = [];
+
+  for (let i = 1; i <= Math.ceil(items.count / amountDefault); i++) {
+    arr.push(i);
+  }
+
+  const lastPage = arr[arr.length - 1];
+
+  const goTo = index => {
+    if (index > arr.length || index < arr[0]) {
+      return false;
+    } else {
+      changePage(index);
     }
+  };
 
-    const lastPage = arr[arr.length - 1];
-
-    const goTo = (index) => {
-        if (index > arr.length || index < arr[0]) {
-            return false
-        } else {
-            props.changePage(index);
-        }
-    };
-
-    return (
-        <Pagination>
-            <Pagination.First onClick={() => goTo(1)}/>
-            <Pagination.Prev onClick={() => goTo(props.page - 1)}/>
-            {
-                arr.map(index => <Pagination.Item active={props.page === index ? true : false} key={index} onClick={() => goTo(index)}>{index}</Pagination.Item>)
-            }
-            <Pagination.Next onClick={() => goTo(props.page + 1)}/>
-            <Pagination.Last onClick={() => goTo(lastPage)}/>
-        </Pagination>
-    )
+  return (
+    <Pagination>
+      <Pagination.First onClick={() => goTo(1)} />
+      <Pagination.Prev onClick={() => goTo(page - 1)} />
+      {arr.map(index => (
+        <Pagination.Item
+          active={page === index ? true : false}
+          key={index}
+          onClick={() => goTo(index)}
+        >
+          {index}
+        </Pagination.Item>
+      ))}
+      <Pagination.Next onClick={() => goTo(page + 1)} />
+      <Pagination.Last onClick={() => goTo(lastPage)} />
+    </Pagination>
+  );
 };
 
 export default PaginationComponent;

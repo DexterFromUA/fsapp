@@ -5,9 +5,12 @@ import {InputGroup, FormControl, Button} from 'react-bootstrap';
 import {SearchRounded, Clear} from '@material-ui/icons';
 import {useTranslation} from "react-i18next";
 
-const FilterComponent = (props) => {
+import Ctx from '../context';
+
+const FilterComponent = () => {
+    const {amountDefault, setFilter, setAmount, searchItems} = React.useContext(Ctx);
     const [date, setDate] = React.useState([new Date(), new Date()]);
-    const [amount, setAmount] = React.useState(props.amount);
+    const [amount, setAmountState] = React.useState(amountDefault);
     const [searchText, setSearchText] = React.useState('');
     const {t} = useTranslation();
 
@@ -20,25 +23,25 @@ const FilterComponent = (props) => {
         
         let arr = [];
         date.map(date => arr.push(date.toISOString()));
-        props.setFilter(true, arr)
+        setFilter(true, arr)
     };
 
     const onChangeAmount = (event) => {
         event.preventDefault();
 
-        props.setAmount(amount);
+        setAmount(amount);
     };
 
     const clearFilter = (event) => {
         event.preventDefault();
 
-        props.setFilter(false, []);
+        setFilter(false, []);
     };
 
     const search = (event) => {
         event.preventDefault();
 
-        props.searchItems(searchText);
+        searchItems(searchText);
     };
 
     return (
@@ -74,7 +77,7 @@ const FilterComponent = (props) => {
                             placeholder={amount}
                             aria-label="Item count"
                             aria-describedby="basic-addon2"
-                            onChange={event => setAmount(event.target.value)}
+                            onChange={event => setAmountState(event.target.value)}
                         />
                         <InputGroup.Append>
                             <Button onClick={event => onChangeAmount(event)} variant="outline-secondary">{t('Set')}</Button>

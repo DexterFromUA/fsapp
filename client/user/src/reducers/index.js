@@ -8,6 +8,7 @@ import page from './page';
 import filter from './filter';
 import cart from './cart';
 import user from './user';
+import search from './search';
 
 const rootReducer = combineReducers({
     hasErrored,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     page,
     filter,
     cart,
-    user
+    user,
+    search
 });
 
 export default rootReducer;

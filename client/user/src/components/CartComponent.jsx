@@ -7,6 +7,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 
+import Ctx from '../context';
+
 const useStyles = makeStyles(theme => ({
     root: {
         padding: theme.spacing(3, 2),
@@ -38,6 +40,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CartComponent = (props) => {
+    const {cart, inc, dec, deleteFromCart, cleanUp, user} = React.useContext(Ctx);
     const [sum, setSum] = React.useState(0);
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
@@ -51,31 +54,31 @@ const CartComponent = (props) => {
     });
 
     React.useEffect(() => {
-        let arr = props.cart.map(item => item.fullPrice);
+        let arr = cart.map(item => item.fullPrice);
         if (arr.length) {
             let sumOfArr = arr.reduce((out, current) => out + current);
             setSum(sumOfArr.toFixed(2));
         }
     }, [props.cart]);
 
-    const inc = (event, id) => {
+    const incItem = (event, id) => {
         event.preventDefault();
-        props.inc(id);
+        inc(id);
     };
 
-    const dec = (event, id) => {
+    const decItem = (event, id) => {
         event.preventDefault();
-        props.dec(id);
+        dec(id);
     };
 
     const remove = (event, id) => {
         event.preventDefault();
-        props.deleteFromCart(id);
+        deleteFromCart(id);
     };
 
-    const cleanUp = (event) => {
+    const doCleanUp = (event) => {
         event.preventDefault();
-        props.cleanUp();
+        cleanUp();
     };
 
     const send = event => {
@@ -87,11 +90,11 @@ const CartComponent = (props) => {
             setError(false);
             const data = {};
 
-            const items = props.cart.map(item => [item.id, item.count]);
+            const items = cart.map(item => [item.id, item.count]);
             const token = 'Bearer ' + localStorage.getItem('Token');
 
             data.items = items;
-            data.id = props.user.id;
+            data.id = user.id;
 
             const options = {
                 headers: {
@@ -111,7 +114,7 @@ const CartComponent = (props) => {
                     setSuccess(true);
                     setTimeout(() => {
                         props.toggleCart(false);
-                        props.cleanUp();
+                        cleanUp();
                     }, 2000);
                     return res;
                 })
@@ -123,7 +126,7 @@ const CartComponent = (props) => {
         }
     };
 
-    if (props.cart.length <= 0) {
+    if (cart.length <= 0) {
         return (
             <React.Fragment>
                 <Container>
@@ -146,16 +149,16 @@ const CartComponent = (props) => {
                             <th>{t('Amount')}</th>
                             <th>{t('Price')}</th>
                             <th><Button variant='outlined' color='secondary' size='small'
-                                        onClick={event => cleanUp(event)}>{t('Clean Up')}</Button></th>
+                                        onClick={event => doCleanUp(event)}>{t('Clean Up')}</Button></th>
                         </tr>
                         </thead>
                         <tbody>
                         {
-                            props.cart.map((item, index) => <tr key={index}>
+                            cart.map((item, index) => <tr key={index}>
                                 <td>{item.title}</td>
                                 <td><Button size="small" aria-label="dec"
-                                            onClick={event => dec(event, item.id)}>-</Button>{item.count}<Button
-                                    size="small" aria-label="inc" onClick={event => inc(event, item.id)}>+</Button></td>
+                                            onClick={event => decItem(event, item.id)}>-</Button>{item.count}<Button
+                                    size="small" aria-label="inc" onClick={event => incItem(event, item.id)}>+</Button></td>
                                 <td>${item.fullPrice}</td>
                                 <td><IconButton size="small" aria-label="Delete"
                                                 onClick={event => remove(event, item.id)}><DeleteIcon/></IconButton>

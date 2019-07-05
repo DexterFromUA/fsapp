@@ -2,35 +2,38 @@ import React from 'react';
 import {Card, Button, Col, Form} from 'react-bootstrap';
 import {useTranslation} from 'react-i18next';
 
-const ItemComponent = (props) => {
+import Ctx from '../context';
+
+const ItemComponent = () => {
+    const {cart, inc, addToCart, items} = React.useContext(Ctx);
     const {t} = useTranslation();
 
     const addItem = (event, item) => {
         event.preventDefault();
 
-        const arrOfIds = props.cart.map(item => item.id);
+        const arrOfIds = cart.map(item => item.id);
 
         if (arrOfIds.includes(item.id)) {
-            props.cart.map(current => {
+            cart.map(current => {
                 if (current.id === item.id) {
-                    return props.inc(item.id);  //TODO added return
+                    return inc(item.id);  //TODO added return
                 }
 
                 return null
             })
         } else {
-            props.addToCart(item);
+            addToCart(item);
         }
     };
 
-    if (!props.items.length) {
+    if (!items.rows.length) {
         return (
             <h1>{t('have no items')}</h1>
         )
     }
 
     return (
-        props.items.map(item => <Col lg={3}>
+        items.rows.map(item => <Col lg={3}>
             <Card className="text-center mb-3">
                 {
                     item.fileUrl !== null && item.fileUrl !== undefined && item.fileUrl !== '' ?

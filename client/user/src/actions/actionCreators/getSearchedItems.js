@@ -1,4 +1,5 @@
 import {fetchData, isLoading, hasErrored} from '../items';
+import {search} from '../filter'
 
 export const searchItems = (text) => {
     return dispatch => {
@@ -10,6 +11,7 @@ export const searchItems = (text) => {
                     throw new Error('error while getting searched items')
                 }
 
+                dispatch(search(true, text));
                 return result.json();
             })
             .then(result => dispatch(fetchData(result)))

@@ -20,7 +20,8 @@ const mapStateToProps = state => {
         user: state.user,
         cart: state.cart,
         page: state.page,
-        filter: state.filter
+        filter: state.filter,
+        search: state.search
     };
 };
 
