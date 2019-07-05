@@ -42,7 +42,7 @@ const ItemComponent = () => {
                 }
                 <Card.Body>
                     <Card.Title>{item.title}</Card.Title>
-                    <Card.Text>{item.author} {item.author && item.bookyear ? '-' : ''} {item.bookyear}</Card.Text>
+                    <Card.Text>{item.author} {item.author && item.bookyear ? '-' : ''} {item.bookyear + ' ' + t('year')}</Card.Text>
                 </Card.Body>
                 <Card.Footer>
                     <Button variant="outline-primary" onClick={event => addItem(event, item)}>{t('Add')} -

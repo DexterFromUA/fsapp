@@ -2,7 +2,7 @@ import React from 'react';
 import {Typography, Divider, List, ListItem} from "@material-ui/core";
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import {InputGroup, FormControl, Button} from 'react-bootstrap';
-import {SearchRounded, Clear} from '@material-ui/icons';
+import {SearchRounded} from '@material-ui/icons';
 import {useTranslation} from "react-i18next";
 
 import Ctx from '../context';
