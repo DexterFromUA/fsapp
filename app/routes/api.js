@@ -9,7 +9,7 @@ const ordersController = require('../controllers/ordersController');
 const authMiddleware = require('../middlewares/auth');
 
 router.get('/all/:amount/:page', productsController.findAll);
-router.get('/filtered/:amount/:page/:start/:end', productsController.findAllWithFilter);
+router.get('/filtered/:start/:end', productsController.findAllWithFilter);
 router.post('/add', productsController.add);
 router.put('/edit/:id', productsController.edit);
 router.delete('/remove/:id', productsController.delete);

@@ -1,21 +1,24 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cors = require('cors');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var passport = require('passport');
-var uuid = require('uuid/v4');
-var FileStore = require('session-file-store')(session);
-var favicon = require('serve-favicon');
-var flash = require('connect-flash');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('passport');
+const uuid = require('uuid/v4');
+const FileStore = require('session-file-store')(session);
+const favicon = require('serve-favicon');
+const flash = require('connect-flash');
+const vhost = require('vhost');
 
 require('dotenv').config();
 require('./config/passport')(passport);
 
-var app = express();
+const app = express();
+const userClient = express();
+const adminClient = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
@@ -46,7 +49,6 @@ app.use(passport.initialize());
 app.use(flash());
 
 // Routes area
-app.use('/admin', require('./routes/admin'));
 app.use('/signup', require('./routes/signup'));
 app.use('/api', require('./routes/api'));
 app.use('/signin', require('./routes/login'));
@@ -54,7 +56,20 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/error', function (req, res) {
     res.render('error')
 });
-app.use('/', require('./routes/user'));
+
+// Multiple apps serving
+userClient.use(express.static(path.join(__dirname, 'client', 'user', 'build')));
+adminClient.use(express.static(path.join(__dirname, 'client', 'admin', 'build')));
+userClient.use((req, res) => res.sendFile(path.join(__dirname, 'client', 'user', 'build', 'index.html')));
+adminClient.use((req, res) => res.sendFile(path.join(__dirname, 'client', 'admin', 'build', 'index.html')));
+app.use(vhost('localhost', userClient));
+app.use(vhost('admin.localhost', adminClient));
+
+// app.use(express.static(path.join(__dirname, 'client', 'user', 'build')));
+// app.use('/', require('./routes/user'));
+// app.use(express.static(path.join(__dirname, 'admin', 'user', 'build')));
+// app.use('/admin', require('./routes/admin'));
+
 app.use(function (req, res, next) {
     next(createError(404));
 });

@@ -1,0 +1,31 @@
+{
+  "translation": {
+    "Cart": "Корзина",
+    "Filters": "Фильтры",
+    "Amount items at one page": "Количество книг на одной странице",
+    "Set": "Установить",
+    "Filter by Date": "Фильтр по дате",
+    "Filter": "Фильтровать",
+    "Clear Filter": "Очистить фильтр",
+    "Add": "В корзину",
+    "have no items": "Пусто",
+    "Language": "Язык",
+    "Title": "Название",
+    "Amount": "Количество",
+    "Price": "Цена (общая)",
+    "Clean Up": "Очистить",
+    "Total amount of your order": "Общая сумма заказа",
+    "Order": "Заказать",
+    "Login": "Логин",
+    "Email address": "Почтовый адресс",
+    "Enter email": "Введите почту",
+    "We'll never share your email with anyone else": "Мы не разглашаем вашу почту",
+    "Password": "Пароль",
+    "Close": "Закрыть",
+    "Sign In": "Войти",
+    "Logout": "Выйти",
+    "Search": "Поиск",
+    "results": "результат(ов)",
+    "year": "год"
+  }
+}
