@@ -8,13 +8,11 @@ const passwordUtility = require('../helpers/passwordUtility');
 require('dotenv').config();
 
 module.exports = (passport) => {
-    // passport.serializeUser((user, done) => {
-    //     return done(null, user.id)
-    // });
-    //
-    // passport.deserializeUser((id, done) => {
-    //     return done(null, id)
-    // });
+    const cookieExt = req => {
+        const token = req.cookies ? req.cookies['Token'] : null;
+    
+        return token;
+    };
 
     passport.use('login', new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
         usersController.findByMail(email)
@@ -34,7 +32,26 @@ module.exports = (passport) => {
         secretOrKey: process.env.SECRET
     }, (token, done) => {
         try {
-            usersController.findByMail(token.user.email)
+            usersController.findByMail(token.user.mail)
+                .then(user => {
+                    if (!user) {
+                        return done(null, false, {message: 'incorrect user'})
+                    } else {
+                        return done(null, token.user, {message: 'success'})
+                    }
+                })
+                .catch(e => done(e, false, 'error while authenticate'))
+        } catch (e) {
+            return done(e, false, {message: e})
+        }
+    }));
+
+    passport.use('cookie', new JwtStrategy({
+        jwtFromRequest: cookieExt,
+        secretOrKey: process.env.SECRET
+    }, (token, done) => {
+        try {
+            usersController.findByMail(token.user.mail)
                 .then(user => {
                     if (!user) {
                         return done(null, false, {message: 'incorrect user'})
@@ -44,7 +61,7 @@ module.exports = (passport) => {
                 })
                 .catch(e => done(e, false, 'error while authenticate'))
         } catch (e) {
-            return done(e)
+            return done(e, false, {message: e})
         }
     }));
 };

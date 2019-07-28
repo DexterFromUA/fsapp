@@ -16,6 +16,7 @@ export const fetchOrders = () => {
             })
             .then(res => dispatch(getOrders(res)))
             .catch(e => {
+                console.log(e)
                 dispatch(errorOrders(e));
                 Alert.error(e)
             })

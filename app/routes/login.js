@@ -16,7 +16,7 @@ router.post('/', function (req, res, next) {
 
                 const payload = {
                     id: user.id,
-                    email: user.mail,
+                    mail: user.mail,
                     name: user.name,
                     lastName: user.lastName,
                     role: user.role
@@ -24,12 +24,14 @@ router.post('/', function (req, res, next) {
 
                 const token = jwt.sign({user: payload}, process.env.SECRET);
 
+                res.cookie('Token', token, {maxAge: 90000, domain: process.env.DOMAIN});
                 res.json({
                     token: token,
                     user: {
                         id: user.id,
                         firstName: user.name,
                         lastName: user.lastName,
+                        mail: user.mail,
                         role: user.role
                     }
                 });
@@ -52,7 +54,7 @@ router.post('/check', function (req, res, next) {
 
                 const payload = {
                     id: user.id,
-                    email: user.mail,
+                    mail: user.mail,
                     name: user.name,
                     lastName: user.lastName,
                     role: user.role
@@ -60,12 +62,14 @@ router.post('/check', function (req, res, next) {
 
                 const token = jwt.sign({user: payload}, process.env.SECRET);
 
+                res.cookie('Token', token, {maxAge: 90000, domain: process.env.DOMAIN});
                 res.json({
                     token: token,
                     user: {
                         id: user.id,
                         firstName: user.name,
                         lastName: user.lastName,
+                        mail: user.mail,
                         role: user.role
                     }
                 });
