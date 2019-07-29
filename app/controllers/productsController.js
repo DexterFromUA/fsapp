@@ -101,8 +101,6 @@ module.exports = {
             .catch(error => res.status(400).send(error))
     },
     removeImage: (req, res) => {
-        console.log(req.params.url);
-
         return Product
             .update({
                 fileUrl: null
