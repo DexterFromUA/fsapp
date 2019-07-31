@@ -1,1 +1,1 @@
-test_zaraffa
+open console and type "start", to start working

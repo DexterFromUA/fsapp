@@ -1,5 +1,4 @@
 const { gql } = require("apollo-server");
-const { GraphQLDateTime } = require("graphql-iso-date");
 
 const typeDefs = gql`
   type Query {
@@ -30,8 +29,11 @@ const typeDefs = gql`
     removeUser(id: ID!): UserResponse
     makeAdmin(id: ID!): UserResponse
     newOrder(
-        userid: Int!
-        items: [Item!]
+        userId: Int!
+        title: String
+        author: String
+        bookyear: String
+        price: Float
     ): OrderResponse
     changeStatus(
         id: ID!
@@ -46,13 +48,11 @@ const typeDefs = gql`
     bookyear: String
     price: Float
     fileUrl: String
-    createAt: GraphQLDateTime
-    updatedAt: GraphQLDateTime
   }
 
   type User {
     id: ID!
-    name: String
+    firstName: String
     lastName: String
     mail: String
     password: String
@@ -61,7 +61,7 @@ const typeDefs = gql`
 
   type Order {
     id: ID!
-    userid: Int
+    userId: Int
     status: String
   }
 
@@ -74,7 +74,7 @@ const typeDefs = gql`
   type ItemsResponse {
     success: Boolean!
     message: String
-    item: [Item]
+    items: [Item]
   }
 
   type UserResponse {

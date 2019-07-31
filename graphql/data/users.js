@@ -10,7 +10,30 @@ class UserAPI extends DataSource {
     this.context = config.context;
   }
 
-  // methods
+  async removeUser({ id }) {
+    const result = await this.store.destroy({
+      where: {
+        id
+      }
+    });
+
+    return result;
+  }
+
+  async makeAdmin({ id }) {
+    const result = await this.store.update(
+      {
+        role: "admin"
+      },
+      {
+        where: {
+          id
+        }
+      }
+    );
+
+    return result;
+  }
 }
 
 module.exports = UserAPI;

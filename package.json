@@ -1,0 +1,47 @@
+{
+  "name": "bookshop",
+  "version": "1.0.0",
+  "description": "bookshop with 2 client(user, admin), nodejs server and graphql api",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx ntl -e start -m",
+    "serverDev": "cd app && npm run dev",
+    "serverProd": "cd app && npm run start",
+    "clientUserStart": "cd client && cd user && npm run start",
+    "clientUserBuild": "cd client && cd user && npm run build",
+    "clientAdminStart": "cd client && cd admin && npm run start",
+    "clientAdminBuild": "cd client && cd admin && npm run build",
+    "serverApiDev": "cd graphql && npm run dev",
+    "serverApiProd": "cd graphql && npm run start",
+    "apolloEnginePublish": "cd graphql && npm run pubgraph",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DexterFromUA/test_zaraffa.git"
+  },
+  "keywords": [
+    "bookshop",
+    "nodejs",
+    "react",
+    "redux",
+    "graphql",
+    "express",
+    "postgres",
+    "sequelize",
+    "multer",
+    "passport",
+    "jwt",
+    "bootstrap",
+    "material",
+    "persist",
+    "i18next",
+    "apollo"
+  ],
+  "author": "dexter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DexterFromUA/test_zaraffa/issues"
+  },
+  "homepage": "https://github.com/DexterFromUA/test_zaraffa#readme"
+}
