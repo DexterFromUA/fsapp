@@ -21,14 +21,14 @@ class ProductAPI extends DataSource {
     return item;
   }
 
-  async findAll({ page, amount }) {
+  async findAll() {
     const items = await this.store.findAndCountAll({
-      offset: page * amount - amount,
-      limit: amount,
+      // offset: page * amount - amount,
+      // limit: amount,
       order: [["createdAt", "DESC"]]
     });
 
-    return items;
+    return { items: items.rows, count: items.count };
   }
 
   async editItem({ id, title, author, bookyear, price }) {
@@ -55,7 +55,7 @@ class ProductAPI extends DataSource {
         id
       }
     });
-
+    
     return result;
   }
 

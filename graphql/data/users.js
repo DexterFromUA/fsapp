@@ -10,6 +10,10 @@ class UserAPI extends DataSource {
     this.context = config.context;
   }
 
+  async findAll() {
+    return await this.store.findAll();
+  }
+
   async removeUser({ id }) {
     const result = await this.store.destroy({
       where: {

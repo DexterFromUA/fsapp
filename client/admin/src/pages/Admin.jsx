@@ -4,9 +4,12 @@ import {Container, Tab, Row, Col, Nav} from 'react-bootstrap';
 import Loading from '../components/Loading';
 import Layout from '../layout';
 
-const ListItem = React.lazy(() => import('../containers/ListItemContainer'));
-const UserList = React.lazy(() => import('../containers/UserListContainer'));
-const OrderList = React.lazy(() => import('../containers/OrderListContainer'));
+// const ListItem = React.lazy(() => import('../containers/ListItemContainer'));
+// const UserList = React.lazy(() => import('../containers/UserListContainer'));
+// const OrderList = React.lazy(() => import('../containers/OrderListContainer'));
+const ListItem = React.lazy(() => import('../components/ListItem'))
+// const UserList = React.lazy(() => import('../components/UserList'))
+// const OrderList = React.lazy(() => import('../components/OrderList'))
 
 const Admin = () => {
     return (
@@ -19,12 +22,12 @@ const Admin = () => {
                                 <Nav.Item>
                                     <Nav.Link eventKey="first">Item List</Nav.Link>
                                 </Nav.Item>
-                                <Nav.Item>
+                                {/* <Nav.Item>
                                     <Nav.Link eventKey="fifth">User List</Nav.Link>
                                 </Nav.Item>
                                 <Nav.Item>
                                     <Nav.Link eventKey="sixth">Order List</Nav.Link>
-                                </Nav.Item>
+                                </Nav.Item> */}
                             </Nav>
                         </Col>
                         <Col lg={10}>
@@ -34,7 +37,7 @@ const Admin = () => {
                                         <ListItem/>
                                     </React.Suspense>
                                 </Tab.Pane>
-                                <Tab.Pane eventKey="fifth">
+                                {/* <Tab.Pane eventKey="fifth">
                                     <React.Suspense fallback={<Loading/>}>
                                         <UserList/>
                                     </React.Suspense>
@@ -43,7 +46,7 @@ const Admin = () => {
                                     <React.Suspense fallback={<Loading/>}>
                                         <OrderList/>
                                     </React.Suspense>
-                                </Tab.Pane>
+                                </Tab.Pane> */}
                             </Tab.Content>
                         </Col>
                     </Row>

@@ -25,15 +25,11 @@ const typeDefs = gql`
       bookyear: String
       price: Float
     ): ItemResponse
-    removeItem(id: ID!): ItemsResponse
+    removeItem(id: ID!): ItemResponse
     removeUser(id: ID!): UserResponse
     makeAdmin(id: ID!): UserResponse
     newOrder(
         userId: Int!
-        title: String
-        author: String
-        bookyear: String
-        price: Float
     ): OrderResponse
     changeStatus(
         id: ID!
@@ -71,22 +67,14 @@ const typeDefs = gql`
     item: Item
   }
 
-  type ItemsResponse {
-    success: Boolean!
-    message: String
-    items: [Item]
-  }
-
   type UserResponse {
     success: Boolean!
     message: String
-    user: User
   }
 
   type OrderResponse {
     success: Boolean!
     message: String
-    order: Order
   }
 `;
 

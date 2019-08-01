@@ -4,17 +4,20 @@
   "description": "bookshop with 2 client(user, admin), nodejs server and graphql api",
   "main": "index.js",
   "scripts": {
-    "start": "npx ntl -e start -m",
+    "start": "npx ntl -e start -m --descriptions -s 8",
     "serverDev": "cd app && npm run dev",
     "serverProd": "cd app && npm run start",
     "clientUserStart": "cd client && cd user && npm run start",
-    "clientUserBuild": "cd client && cd user && npm run build",
     "clientAdminStart": "cd client && cd admin && npm run start",
+    "clientUserBuild": "cd client && cd user && npm run build",
     "clientAdminBuild": "cd client && cd admin && npm run build",
     "serverApiDev": "cd graphql && npm run dev",
     "serverApiProd": "cd graphql && npm run start",
     "apolloEnginePublish": "cd graphql && npm run pubgraph",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "installServer": "cd app && npm run install",
+    "installApiServer": "cd graphql && npm run install",
+    "installUserClient": "cd client && cd user && npm run install",
+    "installAdminClient": "cd client && cd admin && npm run install"
   },
   "repository": {
     "type": "git",
@@ -43,5 +46,22 @@
   "bugs": {
     "url": "https://github.com/DexterFromUA/test_zaraffa/issues"
   },
-  "homepage": "https://github.com/DexterFromUA/test_zaraffa#readme"
+  "homepage": "https://github.com/DexterFromUA/test_zaraffa#readme",
+  "ntl": {
+    "descriptions": {
+      "serverDev": "Start your server in develop mode",
+      "serverProd": "Start your server in production mode",
+      "clientUserStart": "Serve User Client",
+      "clientAdminStart": "Serve Admin Client",
+      "clientUserBuild": "Build User Client for production",
+      "clientAdminBuild": "Build Admin Client for production",
+      "serverApiDev": "Start your API server in develop mode",
+      "serverApiProd": "Start your API server in production mode",
+      "apolloEnginePublish": "Publish API to Apollo engine",
+      "installServer": "Install dependencies for server",
+      "installApiServer": "Install dependencies for API server",
+      "installUserClient": "Install dependencies for User Client",
+      "installAdminClient": "Install dependencies for Admin Client"
+    }
+  }
 }

@@ -13,7 +13,7 @@ const server = new ApolloServer({
   resolvers,
   dataSources: () => ({
     productAPI: new ProductAPI({ store: store.products }),
-    ordersAPI: new OrderAPI({ store: store.orders }),
+    orderAPI: new OrderAPI({ store: store.orders }),
     userAPI: new UserAPI({ store: store.users })
   }),
   engine: {

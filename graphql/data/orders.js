@@ -10,22 +10,29 @@ class OrderAPI extends DataSource {
     this.context = config.context;
   }
 
-  async newOrder(args) {
-    const result = this.store.create({
-      userId: args.userId
+  async findOrders() {
+    const result = await this.store.findAll();
+
+    return result;
+  }
+
+  async newOrder({ userId }) {
+    const result = await this.store.create({
+      userId: userId,
+      status: "Pending"
     });
 
     return result;
   }
 
-  async changeStatus(args) {
-    const result = this.store.update(
+  async changeStatus({ id, status }) {
+    const result = await this.store.update(
       {
-        status: args.status
+        status: status
       },
       {
         where: {
-          id: args.id
+          id: id
         }
       }
     );
