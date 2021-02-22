@@ -1,1 +1,1 @@
-open console and type "start", to start working
+
